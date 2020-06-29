@@ -58,7 +58,7 @@ public class MainController {
     public ModelAndView register(@Valid @ModelAttribute Student student, BindingResult result) {
         ModelAndView vm = new ModelAndView();
         if (!result.hasErrors()) {
-            System.out.println("El registro es " + student.getCode());
+            System.out.println("El registro es " + student.getId());
             vm.addObject("student", new Student());
             service.save(student);
         }
@@ -79,7 +79,7 @@ public class MainController {
     public ModelAndView Edit(@RequestParam(value = "id") int id) {
         ModelAndView vm = new ModelAndView();
         Student student = service.findOne(id);
-        student.setCode(id);
+        student.setId(id);
         vm.addObject("student", student);
         vm.setViewName("index");
         return vm;

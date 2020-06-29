@@ -2,7 +2,9 @@ package com.example.skul5.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
 @Table(schema = "public", name = "estudiante")
@@ -12,37 +14,60 @@ public class Student implements Model {
     }
 
     @Id
-    @Column(name = "c_usuario")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer code;
-
-    @Column(name = "carne")
-    @NotEmpty(message = "El carnet es obligatorio")
-    @Size(message = "El carnet debe tener maximo 10 caracteres", max = 10)
-    private String license;
+    private Integer id;
 
     @Column(name = "nombre")
     @NotEmpty(message = "El nombre es obligatorio")
-    @Size(message = "El nombre debe tener maximo 50 caracteres", max = 50)
+    @Size(message = "El nombre debe tener maximo 32 caracteres", max = 32)
     private String name;
 
     @Column(name = "apellido")
     @NotEmpty(message = "El apellido es obligatorio")
-    @Size(message = "El apellido debe tener maximo 50 caracteres", max = 50)
+    @Size(message = "El apellido debe tener maximo 32 caracteres", max = 32)
     private String lastName;
 
-    @Column(name = "carrera")
-    @NotEmpty(message = "La carrera es obligatoria")
-    @Size(message = "La carrera debe tener maximo 100 caracteres", max = 100)
-    private String career;
+    @Column(name = "carne_minoridad")
+    @NotEmpty(message = "El carnet es obligatorio")
+    @Size(message = "El carnet debe tener exactamente 9 caracteres", min = 9, max = 9)
+    private String license;
+
+    @Column(name = "direccion")
+    @NotEmpty(message = "La direccion es obligatoria")
+    @Size(message = "La direccion maximo 256 caracteres", max = 256)
+    private String address;
+
+    @Column(name = "nacimiento")
+    private Date birthDate;
+
+    @Column(name = "fijo")
+    @Size(message = "El telefono debe tener minimo 8 caracteres y maximo 32", min = 8, max = 32)
+    private String telephone;
+
+    @Column(name = "movil")
+    @Size(message = "El celular debe tener minimo 8 caracteres y maximo 32", min = 8, max = 32)
+    private String Cellphone;
+
+    @Column(name = "id_centro")
+    @NotNull
+    private Integer schoolId;
+
+    @Column(name = "nombre_padre")
+    @Size(message = "El nombre del padre debe tener como maximo 32 caracteres", max = 32)
+    private String fatherName;
+
+    @Column(name = "nombre_madre")
+    @Size(message = "El nombre de la madre debe tener como maximo 32 caracteres", max = 32)
+    private String motherName;
 
     @Override
-    public Integer getCode() {
-        return code;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setId(Integer code) {
+        this.id = code;
     }
 
     public String getLicense() {
@@ -69,11 +94,59 @@ public class Student implements Model {
         this.lastName = lastName;
     }
 
-    public String getCareer() {
-        return career;
+    public String getAddress() {
+        return address;
     }
 
-    public void setCareer(String career) {
-        this.career = career;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getCellphone() {
+        return Cellphone;
+    }
+
+    public void setCellphone(String cellphone) {
+        Cellphone = cellphone;
+    }
+
+    public Integer getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(Integer schoolId) {
+        this.schoolId = schoolId;
+    }
+
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
+    }
+
+    public String getMotherName() {
+        return motherName;
+    }
+
+    public void setMotherName(String motherName) {
+        this.motherName = motherName;
     }
 }

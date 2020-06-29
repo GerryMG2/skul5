@@ -39,7 +39,7 @@ public abstract class Service<T extends Model> {
     @Transactional
     public void save(T model) {
         try {
-            if (model.getCode() == null) {
+            if (model.getId() == null) {
                 dao.create(model);
             } else {
                 dao.update(model);

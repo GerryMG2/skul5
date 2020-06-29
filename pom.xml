@@ -27,9 +27,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.webjars.npm</groupId>
-			<artifactId>materialize-css</artifactId>
-			<version>1.0.0</version>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>4.5.0</version>
 		</dependency>
 
 		<dependency>
