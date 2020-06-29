@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="00088116">
+
+    <title>Skul 5</title>
+
+    <link href="webjars/materialize-css/dist/css/materialize.min.css" rel="stylesheet">
+    <link href="global.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body id="top">
+
+<main>
+
+<p th:text="${msg}" />
+<form action="#" method="post" th:action="@{/login}" th:object="${loginObject}">
+	<input type="text" th:field="*{name}" />
+	<input type="password" th:field="*{passwd}" />
+</form>
+
+</main>
+<footer class="page-footer black">
+    <div class="footer-copyright">
+        <div class="container">
+            <p class="grey-text text-lighten-4 right">
+                copyright 2020© under apache 2.0 licence
+            </p>
+            <p class="grey-text text-lighten-4">Autor: 00088116</p>
+        </div>
+    </div>
+</footer>
+<script src="webjars/materialize-css/dist/js/materialize.min.js"></script>
+</body>
+</html>
