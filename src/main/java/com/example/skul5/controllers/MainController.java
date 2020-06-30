@@ -1,6 +1,6 @@
 package com.example.skul5.controllers;
 
-import com.example.skul5.domain.loginObject;
+import com.example.skul5.domain.UserLogin;
 import com.example.skul5.domain.Student;
 import com.example.skul5.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +30,12 @@ public class MainController {
     public ModelAndView Index() {
         ModelAndView vm = new ModelAndView();
         vm.setViewName("login");
-        vm.addObject("loginObject", new loginObject());
+        vm.addObject("loginObject", new UserLogin());
         return vm;
     }
     
     @PostMapping("/login")
-    public ModelAndView login(@Valid @ModelAttribute loginObject log, BindingResult result) {
+    public ModelAndView login(@Valid @ModelAttribute UserLogin log, BindingResult result) {
         ModelAndView vm = new ModelAndView();
         vm.setViewName("index");
         if (!result.hasErrors()) {

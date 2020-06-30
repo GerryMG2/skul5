@@ -4,19 +4,20 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(schema = "public", name = "centro")
-public class School implements Model{
+@Table(schema = "public", name = "course")
+public class Course implements Model {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "descripcion")
-    @Size(message = "El nombre debe tener como maximo 256 caracteres", max = 256)
+    @Column(name = "name")
+    @Size(message = "Nombre tiene como maximo 256 caracteres", max = 256)
     private String name;
 
-    public School() { }
+    public Course() {
+    }
 
     @Override
     public Integer getId() {

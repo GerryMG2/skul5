@@ -1,9 +1,19 @@
 package com.example.skul5.domain;
 
+import javax.persistence.*;
+import javax.validation.constraints.Size;
+
+@Entity
+@Table(schema = "public",name = "municipality")
 public class Municipality implements Model {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "name")
+    @Size(message = "EL nombre es de maximo 256 caracteres", max = 256)
     private String name;
 
     public Municipality() {

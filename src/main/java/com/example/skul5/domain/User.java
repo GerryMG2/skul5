@@ -1,19 +1,37 @@
 package com.example.skul5.domain;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Entity
+@Table(schema = "public", name = "usuario")
 public class User implements Model {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "name")
+    @Size(message = "EL nombre es de maximo 32 caracteres", max = 32)
     private String name;
 
+    @Column(name = "lastname")
+    @Size(message = "EL apellido es de maximo 32 caracteres", max = 32)
     private String lastName;
 
+    @Column(name = "role_id")
+    @NotNull
     private Integer roleId;
 
-    private Boolean isSessionOpen;
+    @Column(name = "sesion")
+    private Boolean isSessionOpen = false;
 
-    private Boolean active;
+    @Column(name = "activo")
+    private Boolean active = false;
 
+    @Column(name = "passwd")
     private String password;
 
     public User() {

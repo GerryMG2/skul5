@@ -1,6 +1,14 @@
 package com.example.skul5.domain;
 
+import javax.persistence.*;
+
+@Entity
+@Table(schema = "public", name = "role")
 public class Role implements Model {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;
