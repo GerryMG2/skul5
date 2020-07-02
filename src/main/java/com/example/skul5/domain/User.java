@@ -17,7 +17,7 @@ public class User implements Model {
     @Size(message = "EL nombre es de maximo 32 caracteres", max = 32)
     private String name;
 
-    @Column(name = "lastname")
+    @Column(name = "last_name")
     @Size(message = "EL apellido es de maximo 32 caracteres", max = 32)
     private String lastName;
 
@@ -28,7 +28,7 @@ public class User implements Model {
     @Column(name = "sesion")
     private Boolean isSessionOpen = false;
 
-    @Column(name = "activo")
+    @Column(name = "active")
     private Boolean active = false;
 
     @Column(name = "passwd")

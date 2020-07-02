@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
-@Table(schema = "public", name = "estudiante")
+@Table(schema = "public", name = "student")
 public class Student implements Model {
 
     public Student() {
@@ -18,46 +18,46 @@ public class Student implements Model {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nombre")
+    @Column(name = "name")
     @NotEmpty(message = "El nombre es obligatorio")
     @Size(message = "El nombre debe tener maximo 32 caracteres", max = 32)
     private String name;
 
-    @Column(name = "apellido")
+    @Column(name = "last_name")
     @NotEmpty(message = "El apellido es obligatorio")
     @Size(message = "El apellido debe tener maximo 32 caracteres", max = 32)
     private String lastName;
 
-    @Column(name = "carne_minoridad")
+    @Column(name = "license")
     @NotEmpty(message = "El carnet es obligatorio")
     @Size(message = "El carnet debe tener exactamente 9 caracteres", min = 9, max = 9)
     private String license;
 
-    @Column(name = "direccion")
+    @Column(name = "address")
     @NotEmpty(message = "La direccion es obligatoria")
     @Size(message = "La direccion maximo 256 caracteres", max = 256)
     private String address;
 
-    @Column(name = "nacimiento")
+    @Column(name = "birth_date")
     private Date birthDate;
 
-    @Column(name = "fijo")
+    @Column(name = "telephone")
     @Size(message = "El telefono debe tener minimo 8 caracteres y maximo 32", min = 8, max = 32)
     private String telephone;
 
-    @Column(name = "movil")
+    @Column(name = "cellphone")
     @Size(message = "El celular debe tener minimo 8 caracteres y maximo 32", min = 8, max = 32)
     private String Cellphone;
 
-    @Column(name = "id_centro")
+    @Column(name = "id_school")
     @NotNull
     private Integer schoolId;
 
-    @Column(name = "nombre_padre")
+    @Column(name = "father_name")
     @Size(message = "El nombre del padre debe tener como maximo 32 caracteres", max = 32)
     private String fatherName;
 
-    @Column(name = "nombre_madre")
+    @Column(name = "mother_name")
     @Size(message = "El nombre de la madre debe tener como maximo 32 caracteres", max = 32)
     private String motherName;
 

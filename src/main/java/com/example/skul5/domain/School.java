@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(schema = "public", name = "centro")
+@Table(schema = "public", name = "school")
 public class School implements Model{
 
     @Id
@@ -12,7 +12,7 @@ public class School implements Model{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "descripcion")
+    @Column(name = "name")
     @Size(message = "El nombre debe tener como maximo 256 caracteres", max = 256)
     private String name;
 
