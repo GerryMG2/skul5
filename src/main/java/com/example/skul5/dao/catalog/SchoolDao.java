@@ -1,5 +1,7 @@
-package com.example.skul5.dao;
+package com.example.skul5.dao.catalog;
 
+import com.example.skul5.dao.Dao;
+import com.example.skul5.domain.School;
 import com.example.skul5.domain.Student;
 import com.example.skul5.util.PersistenceInfo;
 import org.springframework.dao.DataAccessException;
@@ -11,36 +13,36 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-public class StudentDao implements Dao<Student> {
+public class SchoolDao implements Dao<School> {
 
-    private static final String getAllQuery = "SELECT * FROM PUBLIC.student";
+    private static final String getAllQuery = "SELECT * FROM PUBLIC.school";
 
     @PersistenceContext(unitName = PersistenceInfo.Unit)
     private final EntityManager em;
 
-    public StudentDao(EntityManager em) {
+    public SchoolDao(EntityManager em) {
         this.em = em;
     }
 
     @Override
-    public List<Student> readAll() throws DataAccessException {
-        System.out.println("Reading all students");
-        Query query = em.createNativeQuery(getAllQuery, Student.class);
+    public List<School> readAll() throws DataAccessException {
+        System.out.println("Reading all " + School.class.getName());
+        Query query = em.createNativeQuery(getAllQuery, School.class);
         return query.getResultList();
     }
 
     @Override
-    public void create(Student model) {
+    public void create(School model) throws DataAccessException {
         em.persist(model);
     }
 
     @Override
-    public Student read(Integer id) throws DataAccessException {
-        return em.find(Student.class, id);
+    public School read(Integer id) throws DataAccessException {
+        return em.find(School.class, id);
     }
 
     @Override
-    public void update(Student model) throws DataAccessException {
+    public void update(School model) throws DataAccessException {
         em.merge(model);
         em.flush();
     }
@@ -50,5 +52,4 @@ public class StudentDao implements Dao<Student> {
         Student student = em.find(Student.class, id);
         em.remove(student);
     }
-
 }

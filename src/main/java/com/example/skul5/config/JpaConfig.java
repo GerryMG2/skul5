@@ -1,5 +1,6 @@
 package com.example.skul5.config;
 
+import com.example.skul5.util.PersistenceInfo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -20,7 +21,7 @@ public class JpaConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPersistenceUnitName("DBEscuela");
+        em.setPersistenceUnitName(PersistenceInfo.Unit);
         em.setPackagesToScan("com.example.skul5.domain");
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(hibernateProperties());

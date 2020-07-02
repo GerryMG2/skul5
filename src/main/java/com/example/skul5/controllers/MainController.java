@@ -22,9 +22,7 @@ public class MainController {
     public MainController(Service<Student> service) {
         this.service = service;
     }
-    
-    
-    
+
 
     @GetMapping(value = {"/", "/index", "/inicio"})
     public ModelAndView Index() {
