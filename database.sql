@@ -1,3 +1,9 @@
+CREATE TABLE ROLE
+(
+    ID   SERIAL PRIMARY KEY,
+    NAME VARCHAR(256) UNIQUE
+);
+
 CREATE TABLE DEPARTMENT
 (
     ID   SERIAL PRIMARY KEY,
@@ -14,25 +20,30 @@ CREATE TABLE MUNICIPALITY
 CREATE TABLE USUARIO
 (
     ID        SERIAL PRIMARY KEY,
+    USER_NAME VARCHAR(32),
+    PASSWD    VARCHAR(256),
     NAME      VARCHAR(32),
     LAST_NAME VARCHAR(32),
     ROLE_ID   INTEGER,
+    ID_MUNICIPALITY INTEGER,
+    BIRTH_DATE  DATE,
+    ADDRESS     VARCHAR(256),
     SESION    BOOLEAN,
-    ACTIVE    BOOLEAN,
-    PASSWD    VARCHAR(256)
+    ACTIVE    BOOLEAN DEFAULT FALSE
 );
 
-CREATE TABLE ROLE
+CREATE TABLE SCHOOL
 (
-    ID   SERIAL PRIMARY KEY,
-    NAME VARCHAR(256) UNIQUE
+    ID              SERIAL PRIMARY KEY,
+    NAME            VARCHAR(256),
+    ID_MUNICIPALITY INTEGER
 );
 
 CREATE TABLE STUDENT
 (
     ID          SERIAL PRIMARY KEY,
-    NAME        VARCHAR(32),
-    LAST_NAME   VARCHAR(32),
+    NAME        VARCHAR(80),
+    LAST_NAME   VARCHAR(80),
     LICENSE     VARCHAR(9),
     ADDRESS     VARCHAR(256),
     BIRTH_DATE  DATE,
@@ -41,13 +52,6 @@ CREATE TABLE STUDENT
     ID_SCHOOL   INTEGER,
     FATHER_NAME VARCHAR(32),
     MOTHER_NAME VARCHAR(32)
-);
-
-CREATE TABLE SCHOOL
-(
-    ID              SERIAL PRIMARY KEY,
-    NAME            VARCHAR(256),
-    ID_MUNICIPALITY INTEGER
 );
 
 CREATE TABLE COURSE
@@ -92,73 +96,87 @@ INSERT INTO ROLE (NAME)
 VALUES ('ADMINISTRADOR'),
        ('COORDINADOR');
 
--- DATOS PARA USUARIO
-INSERT INTO USUARIO (NAME, LAST_NAME, ROLE_ID, SESION, ACTIVE, PASSWD)
-VALUES ('JOSE', 'PINEDA', 1, FALSE, TRUE, '9aae0240e0e02983a5462a4914fe6bc3db91d41ff9a36b4ff22bc06e38e11628'),
-       -- Pw : Pikachu1
-       ('RAUL', 'HERRERA', 2, FALSE, TRUE, '6484e7fe84f02520350861bcf8d052590cc332de2465049e37e1f87232bdea5e'),
-       -- Pw : Pikachu2
-       ('ANDRES', 'PEREZ', 2, FALSE, TRUE, '40576429e7d72bf17dbcc4fa1f8d2faf9ad0ceb50bbff41b5a50da9963e271d3');
--- Pw : Pikachu3
+--DATOS PARA DEPARTAMENTO
+INSERT INTO DEPARTMENT (NAME)
+VALUES (1, 'SONSONATE'),
+('MORAZÁN'),
+('LA PAZ'),
+('SAN SALVADOR'),
+('LA LIBERTAD'),
+('CHALATENANGO'),
+('LA UNION'),
+('AHUACHAPÁN'),
+('SAN MIGUEL'),
+('SAN VICENTE'),
+('SANTA ANA'),
+('USULUTÁN'),
+('CUSCATLÁN'),
+('CABAÑAS');
 
 -- DATOS PARA MUNICIPIO
-INSERT INTO MUNICIPALITY (NAME)
-VALUES ('IZALCO'),
-       ('JUAYÚA'),
-       ('SAN JULIÁN'),
-       ('SONSONATE'),
-       ('CHILANGA'),
-       ('SAN FRANCISCO GOTERA'),
-       ('CORINTO'),
-       ('GUATAJIAGUA'),
-       ('SAN MIGUEL TEPEZONTES'),
-       ('SANTA MARÍA OSTUMA'),
-       ('SAN PEDRO MASAHUAT'),
-       ('SAN LUIS LA HERRADURA'),
-       ('PANCHIMALCO'),
-       ('SOYAPANGO'),
-       ('NEJAPA'),
-       ('SAN SALVADOR'),
-       ('LA LIBERTAD'),
-       ('ZARAGOZA'),
-       ('SANTA TECLA'),
-       ('SAN JUAN OPICO'),
-       ('AZACUALPA'),
-       ('SAN IGNACIO'),
-       ('LA PALMA'),
-       ('NUEVA CONCEPCIÓN'),
-       ('SAN ALEJO'),
-       ('SANTA ROSA DE LIMA'),
-       ('EL SAUCE'),
-       ('CONCHAGUA'),
-       ('AHUACHAPÁN'),
-       ('SAN FRANCISCO MENÉNDEZ'),
-       ('EL REFUGIO'),
-       ('JUJUTLA'),
-       ('LOLOTIQUE'),
-       ('SAN MIGUEL'),
-       ('CIUDAD BARRIOS'),
-       ('CHINAMECA'),
-       ('SAN SEBASTIÁN'),
-       ('SAN ILDEFONSO'),
-       ('APASTEPEQUE'),
-       ('SAN VICENTE'),
-       ('SANTA ANA'),
-       ('METAPÁN'),
-       ('SAN SEBASTIÁN SALITRILLO'),
-       ('CHALCHUAPA'),
-       ('JIQUILISCO'),
-       ('JUCUARÁN'),
-       ('BERLÍN'),
-       ('USULUTÁN'),
-       ('SAN JOSÉ GUAYABAL'),
-       ('COJUTEPEQUE'),
-       ('EL CARMEN'),
-       ('SUCHITOTO'),
-       ('TEJUTEPEQUE'),
-       ('JUTIAPA'),
-       ('VICTORIA'),
-       ('ILOBASCO');
+INSERT INTO MUNICIPALITY (NAME, ID_DEPARTMENT)
+VALUES ('IZALCO', 1),
+       ('JUAYÚA', 1),
+       ('SAN JULIÁN', 1),
+       ('SONSONATE', 1),
+       ('CHILANGA', 2),
+       ('SAN FRANCISCO GOTERA', 2),
+       ('CORINTO', 2),
+       ('GUATAJIAGUA', 2),
+       ('SAN MIGUEL TEPEZONTES', 3),
+       ('SANTA MARÍA OSTUMA', 3),
+       ('SAN PEDRO MASAHUAT', 3),
+       ('SAN LUIS LA HERRADURA', 3),
+       ('PANCHIMALCO', 4),
+       ('SOYAPANGO', 4),
+       ('NEJAPA', 4),
+       ('SAN SALVADOR', 4),
+       ('LA LIBERTAD', 5),
+       ('ZARAGOZA', 5),
+       ('SANTA TECLA', 5),
+       ('SAN JUAN OPICO', 5),
+       ('AZACUALPA', 6),
+       ('SAN IGNACIO', 6),
+       ('LA PALMA', 6),
+       ('NUEVA CONCEPCIÓN', 6),
+       ('SAN ALEJO', 7),
+       ('SANTA ROSA DE LIMA', 7),
+       ('EL SAUCE', 7),
+       ('CONCHAGUA', 7),
+       ('AHUACHAPÁN', 8),
+       ('SAN FRANCISCO MENÉNDEZ', 8),
+       ('EL REFUGIO', 8),
+       ('JUJUTLA', 8),
+       ('LOLOTIQUE', 9),
+       ('SAN MIGUEL', 9),
+       ('CIUDAD BARRIOS', 9),
+       ('CHINAMECA', 9),
+       ('SAN SEBASTIÁN', 10),
+       ('SAN ILDEFONSO', 10),
+       ('APASTEPEQUE', 10),
+       ('SAN VICENTE', 10),
+       ('SANTA ANA', 11),
+       ('METAPÁN', 11),
+       ('SAN SEBASTIÁN SALITRILLO', 11),
+       ('CHALCHUAPA', 11),
+       ('JIQUILISCO', 12),
+       ('JUCUARÁN', 12),
+       ('BERLÍN', 12),
+       ('USULUTÁN', 12),
+       ('SAN JOSÉ GUAYABAL', 13),
+       ('COJUTEPEQUE', 13),
+       ('EL CARMEN', 13),
+       ('SUCHITOTO', 13),
+       ('TEJUTEPEQUE', 14),
+       ('JUTIAPA', 14),
+       ('VICTORIA', 14),
+       ('ILOBASCO', 14);
+
+-- DATOS PARA USUARIO
+INSERT INTO USUARIO (name, last_name, role_id, sesion, active, passwd, user_name, birth_date, id_municipality, address)
+VALUES ('JOSE', 'PINEDA', 1, false, true, '9aae0240e0e02983a5462a4914fe6bc3db91d41ff9a36b4ff22bc06e38e11628', 'jpineda', '1988-08-17', 14, 'La campanera senda 15 poniente'),
+('RAUL', 'HERRERA', 2, false, true, '6484e7fe84f02520350861bcf8d052590cc332de2465049e37e1f87232bdea5e', 'rherrera', '1995-12-14', 16, 'Condominio Arboledas 520'),
+('ANDRES', 'PEREZ', 2, false, true, '40576429e7d72bf17dbcc4fa1f8d2faf9ad0ceb50bbff41b5a50da9963e271d3', 'aperez', '1991-07-13', 16, 'Colonia Escalon pasaje 6');
 
 -- DATOS PARA CENTROS
 INSERT INTO SCHOOL (NAME, ID_MUNICIPALITY)
@@ -387,7 +405,7 @@ VALUES ('CENTRO ESCOLAR COMUNIDAD EL BAMBU CASERIO ROSARIO DE CEREN CANTON EL SU
        ('COMPLEJO EDUCATIVO CANTON CERRO COLORADO', 56),
        ('CENTRO ESCOLAR CASERIO SAN LUIS GRAMAL CANTON SAN FRANCISCO DEL MONTE', 56);
 
--- DATOS PARA MATERIA
-
 -- DATOS PARA ESTUDIANTE
+-- DATOS PARA MATERIA
+-- DATOS PARA REGISTRO
 

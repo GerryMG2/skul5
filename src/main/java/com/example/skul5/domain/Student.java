@@ -20,12 +20,12 @@ public class Student implements Model {
 
     @Column(name = "name")
     @NotEmpty(message = "El nombre es obligatorio")
-    @Size(message = "El nombre debe tener maximo 32 caracteres", max = 32)
+    @Size(message = "El nombre debe tener maximo 80 caracteres", max = 80)
     private String name;
 
     @Column(name = "last_name")
     @NotEmpty(message = "El apellido es obligatorio")
-    @Size(message = "El apellido debe tener maximo 32 caracteres", max = 32)
+    @Size(message = "El apellido debe tener maximo 80 caracteres", max = 80)
     private String lastName;
 
     @Column(name = "license")

@@ -1,9 +1,7 @@
-package com.example.skul5.controllers.catalog;
+package com.example.skul5.controllers;
 
 
 import com.example.skul5.domain.School;
-import com.example.skul5.domain.Student;
-import com.example.skul5.domain.UserLogin;
 import com.example.skul5.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

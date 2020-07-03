@@ -2,10 +2,12 @@ package com.example.skul5.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(schema = "public", name = "municipality")
-public class Municipality implements Model {
+@Table(schema = "public", name = "department")
+public class Department implements Model {
 
     @Id
     @Column(name = "id")
@@ -16,7 +18,11 @@ public class Municipality implements Model {
     @Size(message = "EL nombre es de maximo 256 caracteres", max = 256)
     private String name;
 
-    public Municipality() {
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_department")
+    private List<Municipality> municipalities = new ArrayList<>();
+
+    public Department() {
     }
 
     @Override
@@ -34,5 +40,13 @@ public class Municipality implements Model {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Municipality> getMunicipalities() {
+        return municipalities;
+    }
+
+    public void setMunicipalities(List<Municipality> municipalities) {
+        this.municipalities = municipalities;
     }
 }

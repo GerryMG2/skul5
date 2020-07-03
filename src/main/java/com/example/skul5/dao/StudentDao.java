@@ -1,54 +1,16 @@
 package com.example.skul5.dao;
 
 import com.example.skul5.domain.Student;
-import com.example.skul5.util.PersistenceInfo;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.util.List;
 
 @Repository
-public class StudentDao implements Dao<Student> {
-
-    private static final String getAllQuery = "SELECT * FROM PUBLIC.student";
-
-    @PersistenceContext(unitName = PersistenceInfo.Unit)
-    private final EntityManager em;
+public class StudentDao extends Dao<Student> {
 
     public StudentDao(EntityManager em) {
-        this.em = em;
+        super(em);
+        getAllQuery = "SELECT * FROM PUBLIC.student";
+        type = Student.class;
     }
-
-    @Override
-    public List<Student> readAll() throws DataAccessException {
-        System.out.println("Reading all students");
-        Query query = em.createNativeQuery(getAllQuery, Student.class);
-        return query.getResultList();
-    }
-
-    @Override
-    public void create(Student model) {
-        em.persist(model);
-    }
-
-    @Override
-    public Student read(Integer id) throws DataAccessException {
-        return em.find(Student.class, id);
-    }
-
-    @Override
-    public void update(Student model) throws DataAccessException {
-        em.merge(model);
-        em.flush();
-    }
-
-    @Override
-    public void delete(Integer id) throws DataAccessException {
-        Student student = em.find(Student.class, id);
-        em.remove(student);
-    }
-
 }
