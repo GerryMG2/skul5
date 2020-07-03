@@ -1,6 +1,5 @@
 package com.example.skul5.controllers;
 
-
 import com.example.skul5.domain.School;
 import com.example.skul5.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ public class SchoolController {
     @Autowired
     public SchoolController(Service<School> service) {
         this.service = service;
+        service.ConfigureType(School.class);
     }
 
     @GetMapping("/school")

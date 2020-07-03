@@ -9,12 +9,17 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Service<T extends Model> {
+@org.springframework.stereotype.Service
+public class Service<T extends Model> {
 
     protected final Dao<T> dao;
 
     public Service(Dao<T> dao) {
         this.dao = dao;
+    }
+
+    public void ConfigureType(Class<T> type){
+        dao.setType(type);
     }
 
     public List<T> getAll() {
