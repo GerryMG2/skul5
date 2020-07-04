@@ -1,7 +1,10 @@
 package com.example.skul5.domain;
 
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(schema = "public", name = "municipality")
@@ -15,6 +18,9 @@ public class Municipality implements Model {
     @Column(name = "name")
     @Size(message = "EL nombre es de maximo 256 caracteres", max = 256)
     private String name;
+
+    @OneToMany(mappedBy = "municipality", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<School> schools = new HashSet<>();
 
     public Municipality() {
     }
@@ -34,5 +40,13 @@ public class Municipality implements Model {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<School> getSchools() {
+        return schools;
+    }
+
+    public void setSchools(Set<School> schools) {
+        this.schools = schools;
     }
 }

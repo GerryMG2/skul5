@@ -16,6 +16,9 @@ public class School implements Model{
     @Size(message = "El nombre debe tener como maximo 256 caracteres", max = 256)
     private String name;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Municipality municipality;
+
     public School() { }
 
     @Override
@@ -33,5 +36,13 @@ public class School implements Model{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Municipality getMunicipality() {
+        return municipality;
+    }
+
+    public void setMunicipality(Municipality municipality) {
+        this.municipality = municipality;
     }
 }

@@ -22,9 +22,14 @@ public class SchoolController {
 
     @GetMapping("/school")
     public ModelAndView Index() {
-        ModelAndView vm = new ModelAndView();
-        vm.setViewName("school");
+        ModelAndView vm = new ModelAndView("school");
         vm.addObject("schools", service.getAll());
+        return vm;
+    }
+
+    @GetMapping("/school/add")
+    public ModelAndView Add(){
+        ModelAndView vm = new ModelAndView("index");
         return vm;
     }
 }

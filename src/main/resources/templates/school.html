@@ -1,69 +1,35 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="author" content="00088116">
-
-    <title>Skul 5</title>
-
-    <link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="global.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Escuelas</title>
 </head>
 <body>
-<header>
-    <nav>
-        <div class="nav-wrapper black">
-            <a href="/" class="brand-logo">Skul 5</a>
-            <ul id="nav-mobile" class="right">
-                <li><a href="/listado">Listado</a></li>
-            </ul>
-        </div>
-    </nav>
-</header>
-<main>
-    <div class="container z-depth-4 separable">
+<main layout:fragment="content">
+    <div class="container">
         <h3 class="center-align">Lista de centros</h3>
-        <table>
-            <thead>
+        <div class="control">
+            <a th:href="@{/school/add}" class="btn btn-primary">Nueva Escuela</a>
+        </div>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <th>Accion</th>
+            <th>Id</th>
             <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Carnet</th>
-            <th>Carrera</th>
+            <th>Municipio</th>
+            <th>Departamento</th>
             </thead>
             <th:block th:each="school, row:${schools}">
                 <tr>
+                    <td><a th:href="@{/school/edit/{id}(id=${school.id})}"><i class="fas fa-edit fa-2x"></i></a></td>
                     <td th:text="${school.id}"></td>
                     <td th:text="${school.name}"></td>
+                    <td th:text="${school.municipality.name}"></td>
                 </tr>
             </th:block>
         </table>
-        <form th:action="@{/delete}" method="post">
-            <div class="input-field">
-                <label for="input-id">Id</label>
-                <i class="material-icons prefix">person</i>
-                <input type="number" id="input-id" th:name="id" class="validate"
-                       placeholder="1"
-                       aria-describedby="name-help"
-                       data-length="50">
-            </div>
-            <button class="btn primary" type="submit" name="action" value="delete">Eliminar</button>
-            <button class="btn primary" type="submit" name="action" value="edit">Editar</button>
-        </form>
     </div>
 </main>
-<footer class="page-footer black">
-    <div class="footer-copyright">
-        <div class="container">
-            <p class="grey-text text-lighten-4 right">
-                copyright 2020© under apache 2.0 licence
-            </p>
-            <p class="grey-text text-lighten-4">Autor: 00088116</p>
-        </div>
-    </div>
-</footer>
 </body>
 </html>

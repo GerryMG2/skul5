@@ -22,6 +22,7 @@ public class MainController {
     @Autowired
     public MainController(Service<User> service) {
         this.service = service;
+        this.service.ConfigureType(User.class);
     }
 
 
