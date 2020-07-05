@@ -16,7 +16,7 @@ public class School implements Model{
     @Size(message = "El nombre debe tener como maximo 256 caracteres", max = 256)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Municipality municipality;
 
     public School() { }

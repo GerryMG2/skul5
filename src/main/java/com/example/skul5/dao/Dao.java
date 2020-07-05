@@ -26,18 +26,21 @@ public class Dao<T extends Model> {
         this.em = em;
     }
 
-    public void setType(Class<T> type){
+    public void setType(Class<T> type) {
         this.type = type;
     }
 
     @Transactional
     public List<T> readAll() throws DataAccessException {
         System.out.println("Reading all " + type.getSimpleName() + " from " + type.getPackage());
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<T> query = cb.createQuery(type);
+        CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(type);
         Root<T> root = query.from(type);
         query.select(root);
         return em.createQuery(query).getResultList();
+    }
+
+    public CriteriaQuery<T> getQuery() {
+        return em.getCriteriaBuilder().createQuery(type);
     }
 
     @Transactional

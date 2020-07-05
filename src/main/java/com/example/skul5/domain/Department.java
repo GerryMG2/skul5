@@ -2,8 +2,8 @@ package com.example.skul5.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(schema = "public", name = "department")
@@ -18,9 +18,8 @@ public class Department implements Model {
     @Size(message = "EL nombre es de maximo 256 caracteres", max = 256)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_department")
-    private List<Municipality> municipalities = new ArrayList<>();
+    @OneToMany(mappedBy = "department",cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Municipality> municipalities = new HashSet<>();
 
     public Department() {
     }
@@ -42,11 +41,11 @@ public class Department implements Model {
         this.name = name;
     }
 
-    public List<Municipality> getMunicipalities() {
+    public Set<Municipality> getMunicipalities() {
         return municipalities;
     }
 
-    public void setMunicipalities(List<Municipality> municipalities) {
+    public void setMunicipalities(Set<Municipality> municipalities) {
         this.municipalities = municipalities;
     }
 }

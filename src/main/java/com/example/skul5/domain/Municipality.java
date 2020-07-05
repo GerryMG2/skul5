@@ -19,8 +19,11 @@ public class Municipality implements Model {
     @Size(message = "EL nombre es de maximo 256 caracteres", max = 256)
     private String name;
 
-    @OneToMany(mappedBy = "municipality", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "municipality", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<School> schools = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Department department;
 
     public Municipality() {
     }
@@ -48,5 +51,13 @@ public class Municipality implements Model {
 
     public void setSchools(Set<School> schools) {
         this.schools = schools;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }
