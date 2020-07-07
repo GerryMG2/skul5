@@ -52,7 +52,7 @@ public class SchoolController {
             service.save(school);
             vm.setViewName("util/success");
             vm.addObject("message", "Escuela " + school.getName() + " guardada");
-            vm.addObject("url", "/school/list");
+            vm.addObject("url", "/schools");
         }
         return vm;
     }

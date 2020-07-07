@@ -4,25 +4,48 @@
       layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Nueva Escuela</title>
+    <title>Nuevo Usuario</title>
 </head>
 <body>
 <main layout:fragment="content">
     <div class="container">
-        <h3 class="center-align">Nueva escuela</h3>
-        <form method="post" th:action="@{/school/add}" th:object="${school}">
+        <h3 class="center-align">Nueva escuelaNuevo Usuario</h3>
+        <form method="post" th:action="@{/user/add}" th:object="${user}">
             <div th:if="*{id != null}" class="d-none">
                 <label for="input-id">Id:</label>
                 <input type="number" id="input-id" th:field="*{id}" th:readonly="true">
             </div>
             <div class="form-group">
-                <label for="name">Nombre del centro</label>
+                <label for="user-name">Nombre de usuario</label>
+                <input type="text" th:field="*{userName}" class="form-control" id="user-name" aria-describedby="user-name-help">
+                <small id="user-name-help" class="alert alert-danger form-text text-muted" th:errors="*{userName}"></small>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" th:field="*{password}" class="form-control" id="password" aria-describedby="password-help">
+                <small id="password-help" class="alert alert-danger form-text text-muted" th:errors="*{password}"></small>
+            </div>
+            <div class="form-group">
+                <label for="name">Nombre</label>
                 <input type="text" th:field="*{name}" class="form-control" id="name" aria-describedby="name-help">
                 <small id="name-help" class="alert alert-danger form-text text-muted" th:errors="*{name}"></small>
             </div>
             <div class="form-group">
-                <label for="exampleFormControlSelect1">Municipio</label>
-                <select class="form-control" id="exampleFormControlSelect1" th:field="*{municipality.id}">
+                <label for="last-name">Apellido</label>
+                <input type="text" th:field="*{lastName}" class="form-control" id="last-name" aria-describedby="last-name-help">
+                <small id="last-name-help" class="alert alert-danger form-text text-muted" th:errors="*{lastName}"></small>
+            </div>
+            <div class="form-group">
+                <label for="role">Rol</label>
+                <select class="form-control" id="role" th:field="*{role.id}">
+                    <option value="1">Administrador</option>
+                    <option value="2" selected>Coordinador</option>
+                </select>
+                <small class="alert alert-danger form-text text-muted" th:errors="*{role}"></small>
+            </div>
+            <div class="form-group">
+                <label for="municipality">Municipio</label>
+                <select class="form-control" id="municipality" th:field="*{municipality.id}">
                     <option th:each="municipality : ${municipalities}" th:value="${municipality.id}"
                             th:text="${municipality.name}">
                     </option>

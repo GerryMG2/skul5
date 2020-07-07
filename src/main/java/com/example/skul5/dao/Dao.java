@@ -50,6 +50,9 @@ public class Dao<T extends Model> {
     @Transactional
     public List<T> execute(CriteriaQuery<T> query) throws DataAccessException {
         System.out.println("Reading criteria " + type.getSimpleName());
+        query.getRoots().forEach(r -> {
+            query.orderBy(em.getCriteriaBuilder().asc(r.get("id")));
+        });
         return em.createQuery(query).getResultList();
     }
 

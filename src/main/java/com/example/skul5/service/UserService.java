@@ -1,31 +1,36 @@
 package com.example.skul5.service;
 
 import com.example.skul5.dao.Dao;
-import com.example.skul5.domain.Role;
+import com.example.skul5.domain.Municipality;
 import com.example.skul5.domain.User;
 import org.springframework.context.annotation.Scope;
 
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 @org.springframework.stereotype.Service
 @Scope("prototype")
-public class UserService extends Service<User>{
+public class UserService extends Service<User> {
 
-    public UserService(Dao<User> dao) {
+    private final Dao<Municipality> municipalityDao;
+
+    public UserService(Dao<User> dao, Dao<Municipality> municipalityDao) {
         super(dao);
         dao.setType(User.class);
+        municipalityDao.setType(Municipality.class);
+        this.municipalityDao = municipalityDao;
     }
 
     @Override
     public List<User> getAll() {
         CriteriaQuery<User> query = dao.getQuery();
         Root<User> root = query.from(User.class);
-        root.join("role", JoinType.LEFT);
+        root.fetch("role", JoinType.LEFT);
         query.select(root);
         return dao.execute(query);
+    }
+
+    public List<Municipality> getMunicipalities(){
+        return municipalityDao.readAll();
     }
 }

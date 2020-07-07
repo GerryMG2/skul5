@@ -25,10 +25,12 @@ public class User implements Model {
     private String password;
 
     @Column(name = "name")
+    @NotEmpty
     @Size(message = "EL nombre es de maximo 32 caracteres", max = 32)
     private String name;
 
     @Column(name = "last_name")
+    @NotEmpty
     @Size(message = "EL apellido es de maximo 32 caracteres", max = 32)
     private String lastName;
 
@@ -36,6 +38,10 @@ public class User implements Model {
     @JoinColumn(name = "role_id")
     @NotNull(message = "Es necesario asignar un rol")
     private Role role;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_municipality")
+    private Municipality municipality;
 
     @Column(name = "sesion")
     private Boolean isSessionOpen = false;
@@ -97,6 +103,14 @@ public class User implements Model {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Municipality getMunicipality() {
+        return municipality;
+    }
+
+    public void setMunicipality(Municipality municipality) {
+        this.municipality = municipality;
     }
 
     public Boolean getSessionOpen() {
