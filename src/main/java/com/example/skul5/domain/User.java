@@ -1,9 +1,12 @@
 package com.example.skul5.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
 @Table(schema = "public", name = "usuario")
@@ -20,8 +23,6 @@ public class User implements Model {
     private String userName;
 
     @Column(name = "passwd")
-    @NotEmpty
-    @Size(message = "EL nombre de usuario es de maximo 256 caracteres y minimo 8", max = 256, min = 8)
     private String password;
 
     @Column(name = "name")
@@ -43,6 +44,16 @@ public class User implements Model {
     @JoinColumn(name = "id_municipality")
     private Municipality municipality;
 
+    @Column(name = "birth_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull
+    private Date birthDate;
+
+    @Column(name = "address")
+    @NotEmpty
+    @Size(max = 256, message = "La direccion adminte hasta 256 caracteres")
+    private String address;
+
     @Column(name = "sesion")
     private Boolean isSessionOpen = false;
 
@@ -50,10 +61,6 @@ public class User implements Model {
     private Boolean active = false;
 
     public User() {
-    }
-
-    public User(Role role) {
-        setRole(role);
     }
 
     @Override
@@ -111,6 +118,22 @@ public class User implements Model {
 
     public void setMunicipality(Municipality municipality) {
         this.municipality = municipality;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Boolean getSessionOpen() {

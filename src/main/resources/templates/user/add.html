@@ -9,8 +9,8 @@
 <body>
 <main layout:fragment="content">
     <div class="container">
-        <h3 class="center-align">Nueva escuelaNuevo Usuario</h3>
         <form method="post" th:action="@{/user/add}" th:object="${user}">
+        <h3 class="center-align" th:text="*{id} == null ? 'Nuevo Usuario': 'Editar usuario'"></h3>
             <div th:if="*{id != null}" class="d-none">
                 <label for="input-id">Id:</label>
                 <input type="number" id="input-id" th:field="*{id}" th:readonly="true">
@@ -20,10 +20,10 @@
                 <input type="text" th:field="*{userName}" class="form-control" id="user-name" aria-describedby="user-name-help">
                 <small id="user-name-help" class="alert alert-danger form-text text-muted" th:errors="*{userName}"></small>
             </div>
-            <div class="form-group">
+            <div class="form-group" th:if="*{id == null}">
                 <label for="password">Contraseña</label>
                 <input type="password" th:field="*{password}" class="form-control" id="password" aria-describedby="password-help">
-                <small id="password-help" class="alert alert-danger form-text text-muted" th:errors="*{password}"></small>
+                <small id="password-help" class="alert alert-danger form-text text-muted" th:if="${password}" th:text="${password}"></small>
             </div>
             <div class="form-group">
                 <label for="name">Nombre</label>
@@ -52,6 +52,21 @@
                 </select>
                 <small id="municipality-help" class="alert alert-danger form-text text-muted"
                        th:errors="*{municipality}"></small>
+            </div>
+            <div class="form-group">
+                <label for="birth-date">Fecha de nacimiento</label>
+                <input type="date" class="form-control" id="birth-date" th:field="*{birthDate}">
+                <small class="alert alert-danger form-text text-muted" th:errors="*{birthDate}"></small>
+            </div>
+            <div class="form-group">
+                <label for="address">Dirección</label>
+                <input type="text" th:field="*{address}" class="form-control" id="address" aria-describedby="address-help">
+                <small id="address-help" class="alert alert-danger form-text text-muted" th:errors="*{address}"></small>
+            </div>
+            <div class="form-group">
+                <label for="active">Activar</label>
+                <input type="checkbox" th:field="*{active}" class="form-control" id="active" aria-describedby="active-help">
+                <small id="active-help" class="alert alert-danger form-text text-muted" th:errors="*{active}"></small>
             </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
