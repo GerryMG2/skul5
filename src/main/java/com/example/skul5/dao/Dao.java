@@ -6,15 +6,16 @@ import com.example.skul5.util.PersistenceInfo;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Scope("prototype")
 public class Dao<T extends Model> {
 
     protected Class<T> type;
@@ -30,6 +31,10 @@ public class Dao<T extends Model> {
         this.type = type;
     }
 
+    public CriteriaQuery<T> getQuery() {
+        return em.getCriteriaBuilder().createQuery(type);
+    }
+
     @Transactional
     public List<T> readAll() throws DataAccessException {
         System.out.println("Reading all " + type.getSimpleName() + " from " + type.getPackage());
@@ -39,8 +44,10 @@ public class Dao<T extends Model> {
         return em.createQuery(query).getResultList();
     }
 
-    public CriteriaQuery<T> getQuery() {
-        return em.getCriteriaBuilder().createQuery(type);
+    @Transactional
+    public List<T> Query(CriteriaQuery<T> query) throws DataAccessException {
+        System.out.println("Reading criteria " + type.getSimpleName());
+        return em.createQuery(query).getResultList();
     }
 
     @Transactional

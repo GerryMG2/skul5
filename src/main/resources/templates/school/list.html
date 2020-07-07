@@ -18,7 +18,6 @@
             <th>Id</th>
             <th>Nombre</th>
             <th>Municipio</th>
-            <th>Departamento</th>
             </thead>
             <th:block th:each="school, row:${schools}">
                 <tr>
@@ -26,7 +25,6 @@
                     <td th:text="${school.id}"></td>
                     <td th:text="${school.name}"></td>
                     <td th:text="${school.municipality.name}"></td>
-                    <td th:text="${school.municipality.department.name}"></td>
                 </tr>
             </th:block>
         </table>
