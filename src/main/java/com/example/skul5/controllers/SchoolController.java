@@ -25,7 +25,7 @@ public class SchoolController {
         this.service = service;
     }
 
-    @GetMapping(value = {"/school", "/school/list"})
+    @GetMapping(value = {"/schools", "/school/list"})
     public ModelAndView Index() {
         ModelAndView vm = new ModelAndView("school/list");
         vm.addObject("schools", service.getAll());

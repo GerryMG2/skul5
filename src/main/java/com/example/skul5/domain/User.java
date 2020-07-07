@@ -1,6 +1,7 @@
 package com.example.skul5.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -13,6 +14,16 @@ public class User implements Model {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "user_name")
+    @NotEmpty
+    @Size(message = "EL nombre de usuario es de maximo 32 caracteres", max = 32)
+    private String userName;
+
+    @Column(name = "passwd")
+    @NotEmpty
+    @Size(message = "EL nombre de usuario es de maximo 256 caracteres y minimo 8", max = 256, min = 8)
+    private String password;
+
     @Column(name = "name")
     @Size(message = "EL nombre es de maximo 32 caracteres", max = 32)
     private String name;
@@ -21,9 +32,10 @@ public class User implements Model {
     @Size(message = "EL apellido es de maximo 32 caracteres", max = 32)
     private String lastName;
 
-    @Column(name = "role_id")
-    @NotNull
-    private Integer roleId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
+    @NotNull(message = "Es necesario asignar un rol")
+    private Role role;
 
     @Column(name = "sesion")
     private Boolean isSessionOpen = false;
@@ -31,10 +43,11 @@ public class User implements Model {
     @Column(name = "active")
     private Boolean active = false;
 
-    @Column(name = "passwd")
-    private String password;
-
     public User() {
+    }
+
+    public User(Role role) {
+        setRole(role);
     }
 
     @Override
@@ -44,6 +57,22 @@ public class User implements Model {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
@@ -62,12 +91,12 @@ public class User implements Model {
         this.lastName = lastName;
     }
 
-    public Integer getRoleId() {
-        return roleId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public Boolean getSessionOpen() {
@@ -86,11 +115,4 @@ public class User implements Model {
         this.active = active;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

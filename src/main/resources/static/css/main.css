@@ -125,3 +125,7 @@
 .footer a {
     color: var(--primary-color);
 }
+
+.control {
+    margin: 1em 0;
+}

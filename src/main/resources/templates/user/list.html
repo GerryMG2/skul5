@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Usuarios</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="container">
+        <h3 class="center-align">Lista de Usuarios</h3>
+        <div class="control">
+            <a th:href="@{/school/add}" class="btn btn-primary">Nuevo Usuario</a>
+        </div>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <th>Accion</th>
+            <th>Id</th>
+            <th>Nombre de usuario</th>
+            <th>Estado</th>
+            <th>Tipo</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            </thead>
+            <th:block th:each="user, row:${users}">
+                <tr>
+                    <td><a th:href="@{/user/edit/{id}(id=${user.id})}"><i class="fas fa-edit fa-2x"></i></a></td>
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.userName}"></td>
+                    <td th:text="${user.active ? 'Activo': 'Inactivo'}"></td>
+                    <td th:text="${user.role.name}"></td>
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.lastName}"></td>
+                </tr>
+            </th:block>
+        </table>
+    </div>
+</main>
+</body>
+</html>
