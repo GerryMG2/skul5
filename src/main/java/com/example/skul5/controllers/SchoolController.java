@@ -26,8 +26,8 @@ public class SchoolController {
     }
 
     @GetMapping(value = {"/schools", "/school/list"})
-    public ModelAndView Index() {
-        ModelAndView vm = new ModelAndView("school/list");
+    public ModelAndView index() {
+        ModelAndView vm = new ModelAndView("school/schools");
         vm.addObject("schools", service.getAll());
         return vm;
     }

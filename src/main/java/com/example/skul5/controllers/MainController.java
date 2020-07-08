@@ -27,7 +27,7 @@ public class MainController {
 
 
     @GetMapping(value = {"/"})
-    public ModelAndView Index() {
+    public ModelAndView index() {
         ModelAndView vm = new ModelAndView();
         vm.setViewName("index");
         vm.addObject("student", new Student());
@@ -36,7 +36,7 @@ public class MainController {
     }
 
     @GetMapping(value = {"/login"})
-    public ModelAndView Login() {
+    public ModelAndView login() {
         ModelAndView vm = new ModelAndView();
         vm.setViewName("login");
         vm.addObject("loginRequest", new UserLogin());

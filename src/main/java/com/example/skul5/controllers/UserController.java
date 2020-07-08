@@ -2,12 +2,10 @@ package com.example.skul5.controllers;
 
 import com.example.skul5.domain.User;
 import com.example.skul5.service.UserService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,8 +33,8 @@ public class UserController {
     }
 
     @GetMapping(value = {"/users", "/user/list"})
-    public ModelAndView Index() {
-        ModelAndView vm = new ModelAndView("user/list");
+    public ModelAndView index() {
+        ModelAndView vm = new ModelAndView("user/users");
         vm.addObject("users", service.getAll());
         return vm;
     }
