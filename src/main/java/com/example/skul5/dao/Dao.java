@@ -71,7 +71,7 @@ public class Dao<T extends Model> {
     public T read(Function<CriteriaBuilder, CriteriaQuery<T>> queryFunction) throws DataAccessException {
         CriteriaQuery<T> query = queryFunction.apply(em.getCriteriaBuilder());
         List<T> res = em.createQuery(query).getResultList();
-        if (res.size() > 1) {
+        if (res.size() > 0) {
             return res.get(0);
         }
         return null;

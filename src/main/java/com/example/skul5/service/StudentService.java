@@ -1,8 +1,7 @@
 package com.example.skul5.service;
 
 import com.example.skul5.dao.Dao;
-import com.example.skul5.domain.Record;
-import com.example.skul5.domain.RecordId;
+import com.example.skul5.domain.Course;
 import com.example.skul5.domain.Student;
 import org.springframework.context.annotation.Scope;
 
@@ -14,36 +13,30 @@ import java.util.List;
 @Scope("prototype")
 public class StudentService extends Service<Student> {
 
-    public StudentService(Dao<Student> dao) {
+    private final Dao<Course> dao1;
+
+    public StudentService(Dao<Student> dao, Dao<Course> dao1) {
         super(dao);
         dao.setType(Student.class);
+        this.dao1 = dao1;
+        dao1.setType(Course.class);
     }
 
-    @Override
-    public List<Student> getAll() {
-        CriteriaQuery<Student> query = dao.getQuery();
-        Root<Student> root = query.from(Student.class);
-        root.fetch("templates/student", JoinType.RIGHT);
-        query.select(root);
-        return dao.readAll(query);
-    }
-
-    @Override
-    public Student findOne(Integer code) {
+    public Student retrieveOne(Integer code) {
         return dao.read(qb -> {
             ArrayList<Order> order = new ArrayList<>();
             CriteriaQuery<Student> query = qb.createQuery(Student.class);
             Root<Student> root = query.from(Student.class);
-            Fetch<Student, Record> join = root.fetch("records", JoinType.LEFT);
-            Fetch<Record, RecordId> join2 = join.fetch("primaryKey", JoinType.LEFT);
-            join2.fetch("course", JoinType.LEFT);
-            query.select(root);
-            Root<Record> root2 = query.from(Record.class);
+            root.fetch("records", JoinType.LEFT)
+                    .fetch("primaryKey")
+                    .fetch("course", JoinType.LEFT);
             query.where(qb.equal(root.get("id"), code));
-            order.add(qb.asc(root2.get("primaryKey").get("year")));
-            order.add(qb.asc(root2.get("primaryKey").get("semester")));
-            query.orderBy(order);
+            query.select(root);
             return query;
         });
+    }
+
+    public List<Course> getCourses() {
+        return dao1.readAll();
     }
 }

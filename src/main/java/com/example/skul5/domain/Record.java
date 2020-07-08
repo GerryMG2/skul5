@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Table(schema = "public", name = "record")
 public class Record {
 
-    @EmbeddedId
+    @Id
     private RecordId primaryKey;
 
     @Column(name = "grade")

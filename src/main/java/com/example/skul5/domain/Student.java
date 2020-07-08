@@ -63,7 +63,8 @@ public class Student implements Model {
     @Size(message = "El nombre de la madre debe tener como maximo 32 caracteres", max = 32)
     private String motherName;
 
-    @OneToMany(mappedBy = "primaryKey.student", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_student")
     private Set<Record> records = new HashSet<>();
 
     @Override
