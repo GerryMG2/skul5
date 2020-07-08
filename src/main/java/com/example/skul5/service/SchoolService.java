@@ -33,6 +33,6 @@ public class SchoolService extends Service<School> {
         Root<School> root = query.from(School.class);
         root.fetch("municipality", JoinType.LEFT);
         query.select(root);
-        return dao.execute(query);
+        return dao.readAll(query);
     }
 }

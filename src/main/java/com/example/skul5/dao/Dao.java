@@ -4,6 +4,7 @@ import com.example.skul5.domain.Model;
 import com.example.skul5.util.PersistenceInfo;
 
 import java.util.List;
+import java.util.function.Function;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -48,7 +49,7 @@ public class Dao<T extends Model> {
     }
 
     @Transactional
-    public List<T> execute(CriteriaQuery<T> query) throws DataAccessException {
+    public List<T> readAll(CriteriaQuery<T> query) throws DataAccessException {
         System.out.println("Reading criteria " + type.getSimpleName());
         query.getRoots().forEach(r -> {
             query.orderBy(em.getCriteriaBuilder().asc(r.get("id")));
@@ -64,6 +65,16 @@ public class Dao<T extends Model> {
     @Transactional
     public T read(Integer id) throws DataAccessException {
         return em.find(type, id);
+    }
+
+    @Transactional
+    public T read(Function<CriteriaBuilder, CriteriaQuery<T>> queryFunction) throws DataAccessException {
+        CriteriaQuery<T> query = queryFunction.apply(em.getCriteriaBuilder());
+        List<T> res = em.createQuery(query).getResultList();
+        if (res.size() > 1) {
+            return res.get(0);
+        }
+        return null;
     }
 
     @Transactional

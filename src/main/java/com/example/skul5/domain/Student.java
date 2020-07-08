@@ -5,6 +5,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(schema = "public", name = "student")
@@ -60,6 +62,9 @@ public class Student implements Model {
     @Column(name = "mother_name")
     @Size(message = "El nombre de la madre debe tener como maximo 32 caracteres", max = 32)
     private String motherName;
+
+    @OneToMany(mappedBy = "primaryKey.student", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<Record> records = new HashSet<>();
 
     @Override
     public Integer getId() {
@@ -148,5 +153,13 @@ public class Student implements Model {
 
     public void setMotherName(String motherName) {
         this.motherName = motherName;
+    }
+
+    public Set<Record> getRecords() {
+        return records;
+    }
+
+    public void setRecords(Set<Record> records) {
+        this.records = records;
     }
 }

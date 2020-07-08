@@ -27,7 +27,7 @@ public class UserService extends Service<User> {
         Root<User> root = query.from(User.class);
         root.fetch("role", JoinType.LEFT);
         query.select(root);
-        return dao.execute(query);
+        return dao.readAll(query);
     }
 
     public List<Municipality> getMunicipalities(){
