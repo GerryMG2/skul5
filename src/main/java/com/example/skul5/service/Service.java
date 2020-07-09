@@ -21,6 +21,10 @@ public class Service<T extends Model> {
     public void ConfigureType(Class<T> type){
         dao.setType(type);
     }
+    
+    public <G> T getOneByOneField(String field,G value) {
+    	return dao.<G>getOneByOneField(field, value);
+    }
 
     public List<T> getAll() {
         try {

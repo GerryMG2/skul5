@@ -3,13 +3,15 @@ package com.example.skul5.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 @Configuration
-public class WebConfig {
+public class WebConfig implements WebMvcConfigurer{
 
     public ClassLoaderTemplateResolver templateResolver() {
         ClassLoaderTemplateResolver tr = new ClassLoaderTemplateResolver();
@@ -40,6 +42,12 @@ public class WebConfig {
 
         reg.addResourceHandler("webjars/**")
                 .addResourceLocations("/webjars/");
+    }
+    
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+    	// TODO Auto-generated method stub
+    	WebMvcConfigurer.super.addInterceptors(registry);
     }
 
 }

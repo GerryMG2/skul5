@@ -6,6 +6,8 @@ import com.example.skul5.util.PersistenceInfo;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.Table;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -43,6 +45,18 @@ public class Dao<T extends Model> {
     @Transactional
     public void create(T model) throws DataAccessException {
         em.persist(model);
+    }
+    
+    public  <G>  T  getOneByOneField(String field,G value ) throws DataAccessException {
+    	String tableName = this.type.getAnnotation(Table.class).name();
+    	Query q = em.createNativeQuery("SELECT * FROM "+tableName +" WHERE "+field+ " = :value ;");
+    
+    	q.setParameter("value", value);
+    	
+    	
+    	return (T) q.getSingleResult();
+    	
+    	
     }
 
     @Transactional
