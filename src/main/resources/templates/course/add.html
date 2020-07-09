@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Curso</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="container">
+        <form method="post" th:action="@{/course/add}" th:object="${course}">
+            <h3 class="center-align" th:text="*{id} == null ? 'Nuevo curso': 'Editar curso'"></h3>
+            <div th:if="*{id != null}" class="d-none">
+                <label for="input-id">Id:</label>
+                <input type="number" id="input-id" th:field="*{id}" th:readonly="true">
+            </div>
+            <div class="form-group">
+                <label for="name">Nombre del curso</label>
+                <input type="text" th:field="*{name}" class="form-control" id="name" aria-describedby="name-help">
+                <small id="name-help" class="alert alert-danger form-text text-muted" th:errors="*{name}"></small>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

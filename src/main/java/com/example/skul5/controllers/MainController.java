@@ -18,20 +18,34 @@ import javax.validation.Valid;
 @Component
 public class MainController {
 
-    private final Service<Student> service;
-    private final Service<User> userService;
+    private final Service<User> service;
+ 
 
     @Autowired
-    public MainController(Service<Student> servicee,Service<User> ss) {
+
+    public MainController(Service<User> service) {
     
-        this.service = servicee;
-		this.userService = ss;
+        this.service = service;
+        this.service.ConfigureType(User.class);
+		
         
     }
 
 
+
     @GetMapping(value = {"/", "/index", "/inicio"})
-    public ModelAndView Index() {
+    public ModelAndView index() {
+
+        ModelAndView vm = new ModelAndView();
+
+        vm.setViewName("login");
+        vm.addObject("loginRequest", new UserLogin());
+        
+        return vm;
+    }
+
+    @GetMapping(value = {"/login"})
+    public ModelAndView login() {
         ModelAndView vm = new ModelAndView();
         vm.setViewName("login");
         vm.addObject("loginRequest", new UserLogin());
@@ -58,13 +72,13 @@ public class MainController {
              	System.out.println(usuario);
              	if(usuario == null) {
              		System.out.println("No esta vacio");
-             		User us = userService.<String>getOneByOneField("username", log.getUserName());
+             		User us = service.<String>getOneByOneField("user_name", log.getUserName());
              		if(us.getPassword().equals(log.getPassword()) && (!us.getActive())) {
              			//main
              			request.getSession().setAttribute("usuario", us.getName());
-             			request.getSession().setAttribute("role", us.getRoleId());
+             			request.getSession().setAttribute("role", us.getRole().getName());
              			us.setActive(true);
-             			userService.save(us);
+             			service.save(us);
              			 vm.setViewName("login");
              			 vm.addObject("msg", "El usuario se logueo");
              			//TODO: Redirect here to main page
@@ -108,43 +122,5 @@ public class MainController {
         
         return vm;
     }
-
-    @GetMapping("/listado")
-    public ModelAndView Student() {
-        ModelAndView vm = new ModelAndView();
-        vm.addObject("students", service.getAll());
-        vm.setViewName("list");
-        return vm;
-    }
-
-    @PostMapping("/register")
-    public ModelAndView register(@Valid @ModelAttribute Student student, BindingResult result) {
-        ModelAndView vm = new ModelAndView();
-        if (!result.hasErrors()) {
-            System.out.println("El registro es " + student.getId());
-            vm.addObject("student", new Student());
-            service.save(student);
-        }
-        vm.setViewName("index");
-        return vm;
-    }
-
-    @PostMapping(value = "/delete", params = "action=delete")
-    public ModelAndView delete(@RequestParam(value = "id") int id) {
-        ModelAndView vm = new ModelAndView();
-        vm.addObject("id", id);
-        vm.addObject("deleted", service.delete(id));
-        vm.setViewName("deleted");
-        return vm;
-    }
-
-    @PostMapping(value = "/delete", params = "action=edit")
-    public ModelAndView Edit(@RequestParam(value = "id") int id) {
-        ModelAndView vm = new ModelAndView();
-        Student student = service.findOne(id);
-        student.setId(id);
-        vm.addObject("student", student);
-        vm.setViewName("index");
-        return vm;
-    }
+    
 }

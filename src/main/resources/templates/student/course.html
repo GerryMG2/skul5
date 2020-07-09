@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Curso</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="container">
+        <form method="post" th:action="@{/student/x/course/add}" th:object="${course}">
+            <h3 class="center-align" th:text="'Expediente: ' + ${student.name} + ' ' + ${student.lastName}"></h3>
+            <div class="form-group">
+                <label for="name">Año</label>
+                <input type="number" th:field="*{primaryKey.year}" class="form-control" id="name"
+                       aria-describedby="name-help">
+                <small id="name-help" class="alert alert-danger form-text text-muted"
+                       th:errors="*{primaryKey.year}"></small>
+            </div>
+            <div class="form-group">
+                <label for="semester">Semestre</label>
+                <select class="form-control" id="semester" th:field="*{primaryKey.semester}">
+                    <option value="1">Semestre 1</option>
+                    <option value="2">Semestre 2</option>
+                </select>
+                <small id="semester-help" class="alert alert-danger form-text text-muted"
+                       th:errors="*{primaryKey.semester}"></small>
+            </div>
+            <div class="form-group">
+                <label for="course">Curso</label>
+                <select class="form-control" id="course" th:field="*{primaryKey.course.id}" required>
+                    <option th:each="course : ${courses}" th:value="${course.id}"
+                            th:text="${course.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="grade">Nota</label>
+                <input type="number" id="grade" th:field="*{grade}">
+                <small id="grade-help" class="alert alert-danger form-text text-muted"
+                       th:errors="*{grade}"></small>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

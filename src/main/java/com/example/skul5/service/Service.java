@@ -3,6 +3,7 @@ package com.example.skul5.service;
 import com.example.skul5.dao.Dao;
 import com.example.skul5.domain.Model;
 import com.sun.istack.internal.Nullable;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 
 import javax.transaction.Transactional;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @org.springframework.stereotype.Service
+@Scope("prototype")
 public class Service<T extends Model> {
 
     protected final Dao<T> dao;

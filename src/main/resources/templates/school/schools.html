@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Escuelas</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="container">
+        <h3 class="center-align">Lista de centros</h3>
+        <div class="control">
+            <a th:href="@{/school/add}" class="btn btn-primary">Nueva Escuela</a>
+        </div>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <th>Accion</th>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Municipio</th>
+            </thead>
+            <th:block th:each="school, row:${schools}">
+                <tr>
+                    <td><a th:href="@{/school/edit/{id}(id=${school.id})}"><i class="fas fa-edit fa-2x"></i></a></td>
+                    <td th:text="${school.id}"></td>
+                    <td th:text="${school.name}"></td>
+                    <td th:text="${school.municipality.name}"></td>
+                </tr>
+            </th:block>
+        </table>
+    </div>
+</main>
+</body>
+</html>
