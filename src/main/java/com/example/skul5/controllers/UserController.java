@@ -27,7 +27,7 @@ public class UserController {
     }
 
     private void retry(ModelAndView vm, User user) {
-        vm.setViewName("/user/add");
+        vm.setViewName("user/add");
         vm.addObject("user", user);
         vm.addObject("municipalities", service.getMunicipalities());
     }

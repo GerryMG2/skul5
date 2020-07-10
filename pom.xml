@@ -11,6 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>skul5</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>skul5</name>
 	<description>School management system</description>
 
