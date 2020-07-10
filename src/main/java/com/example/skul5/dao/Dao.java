@@ -64,6 +64,8 @@ public class Dao<T extends Model> {
         em.persist(model);
     }
     
+    
+    
     public  <G>  T  getOneByOneField(String field,G value ) throws DataAccessException {
     	String tableName = this.type.getAnnotation(Table.class).name();
     	Query q = em.createNativeQuery("SELECT * FROM "+tableName +" WHERE "+field+ " = :value ;",this.type);
@@ -83,6 +85,14 @@ public class Dao<T extends Model> {
     @Transactional
     public T read(Integer id) throws DataAccessException {
         return em.find(type, id);
+    }
+    
+    public <H> List<H> getListOfSommethingWithQuerryFilterByListString(String qr,Class<H> t) {
+    	
+    	
+    	Query q = em.createNativeQuery(qr,t);
+    	
+    	return q.getResultList();
     }
 
     @Transactional
