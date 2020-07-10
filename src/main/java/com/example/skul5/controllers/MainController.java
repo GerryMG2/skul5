@@ -125,10 +125,18 @@ public class MainController {
              			
              			
              		}else {
-             			System.out.println("error datos");
-                		 vm.setViewName("login");
-                		 vm.addObject("loginRequest", new UserLogin());
-         				 vm.addObject("msg", "El usuario o la contraseña son incorrectos");
+             			if(us.getActive()) {
+             				System.out.println("error datos");
+                   		 vm.setViewName("login");
+                   		 vm.addObject("loginRequest", new UserLogin());
+            				 vm.addObject("msg", "El usuario o la contraseña son incorrectos");
+             			}else {
+             				System.out.println("error datos");
+                   		 vm.setViewName("login");
+                   		 vm.addObject("loginRequest", new UserLogin());
+            				 vm.addObject("msg", "Usuario Inhabilitado");
+             			}
+             			
              		}
              		
              	}else {
