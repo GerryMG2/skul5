@@ -72,14 +72,16 @@ public class MainController {
              	System.out.println(usuario);
              	if(usuario == null) {
              		System.out.println("No esta vacio");
-             		User us = service.<String>getOneByOneField("user_name", log.getUserName());
+             		User us = (User) service.<String>getOneByOneField("user_name", log.getUserName());
              		if(us.getPassword().equals(log.getPassword()) && (!us.getActive())) {
+             			System.out.println("hay un usurio");
              			//main
              			request.getSession().setAttribute("usuario", us.getName());
              			request.getSession().setAttribute("role", us.getRole().getName());
              			us.setActive(true);
              			service.save(us);
              			 vm.setViewName("login");
+             			vm.addObject("loginRequest", new UserLogin());
              			 vm.addObject("msg", "El usuario se logueo");
              			//TODO: Redirect here to main page
              			
@@ -114,7 +116,7 @@ public class MainController {
 		} catch (Exception e) {
 			System.out.println("hay errores:");
 			  vm.setViewName("login");
-			  System.out.println(e);
+			  e.printStackTrace();
 			  vm.addObject("loginRequest", new UserLogin());
 			// TODO: handle exception
 		}

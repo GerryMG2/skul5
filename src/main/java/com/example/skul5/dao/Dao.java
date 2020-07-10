@@ -66,14 +66,9 @@ public class Dao<T extends Model> {
     
     public  <G>  T  getOneByOneField(String field,G value ) throws DataAccessException {
     	String tableName = this.type.getAnnotation(Table.class).name();
-    	Query q = em.createNativeQuery("SELECT * FROM "+tableName +" WHERE "+field+ " = :value ;");
-    
+    	Query q = em.createNativeQuery("SELECT * FROM "+tableName +" WHERE "+field+ " = :value ;",this.type);
     	q.setParameter("value", value);
-    	
-    	
     	return (T) q.getSingleResult();
-    	
-    	
     }
 
     @Transactional

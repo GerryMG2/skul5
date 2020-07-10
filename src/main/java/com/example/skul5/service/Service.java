@@ -25,7 +25,7 @@ public class Service<T extends Model> {
     }
     
     public <G> T getOneByOneField(String field,G value) {
-    	return dao.<G>getOneByOneField(field, value);
+    	return (T) dao.<G>getOneByOneField(field, value);
     }
 
     public List<T> getAll() {
