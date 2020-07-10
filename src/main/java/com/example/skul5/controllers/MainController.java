@@ -30,12 +30,27 @@ public class MainController {
 
 
     @GetMapping(value = {"/", "/index", "/inicio"})
-    public ModelAndView index() {
+    public ModelAndView index(HttpServletRequest request) {
 
         ModelAndView vm = new ModelAndView();
-
-        vm.setViewName("login");
-        vm.addObject("loginRequest", new UserLogin());
+        if(request.getSession().getAttribute("role") != null) {
+        	if(request.getSession().getAttribute("role").equals("ADMINISTRADOR")) {
+        		vm.setViewName("layout");
+        		vm.addObject("msg", "Bienvenido!");
+        	}else {
+        		if(request.getSession().getAttribute("role").equals("COORDINADOR")) {
+        			vm.setViewName("layout");
+                    vm.addObject("msg", "Bienvenido!");
+        		}else {
+        			vm.setViewName("login");
+        	        vm.addObject("loginRequest", new UserLogin());
+        		}
+        	}
+        }else {
+        	vm.setViewName("login");
+	        vm.addObject("loginRequest", new UserLogin());
+        }
+        
         
         return vm;
     }
@@ -49,9 +64,11 @@ public class MainController {
         	if(request.getSession().getAttribute("role").equals("ADMINISTRADOR")) {
         		// TODO: redirect to main administrador
         		vm.setViewName("layout");
+        		vm.addObject("msg", "Bienvenido!");
         	}else {
         		if(request.getSession().getAttribute("role").equals("COORDINADOR")) {
         			vm.setViewName("layout");
+        			vm.addObject("msg", "Bienvenido!");
         			// TODO: redirect to main coordinador
             	}else {
             		vm.setViewName("login");
@@ -116,9 +133,9 @@ public class MainController {
                  			request.getSession().setAttribute("role", us.getRole().getName());
                  			us.setSessionOpen(true);
                  			service.save(us);
-                 			 vm.setViewName("login");
-                 			vm.addObject("loginRequest", new UserLogin());
-                 			 vm.addObject("msg", "El usuario se logueo");
+                 			 vm.setViewName("layout");
+                 		
+                 			 vm.addObject("msg", "Bienvenido!");
                  			//TODO: Redirect here to main page
              			}
              			
@@ -158,9 +175,9 @@ public class MainController {
 		} catch (Exception e) {
 			System.out.println("hay errores:");
 			  vm.setViewName("login");
-			  e.printStackTrace();
+			 
 			  vm.addObject("loginRequest", new UserLogin());
-			  vm.addObject("msg", "algo sucedio");
+			  vm.addObject("msg", "los campos no pueden ir vacios");
 			// TODO: handle exception
 		}
        

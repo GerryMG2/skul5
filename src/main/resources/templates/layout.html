@@ -40,14 +40,36 @@
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI} == '/' ? 'active':''">
                 <a class="nav-link" th:href="@{/}">Inicio</a>
                 </li>
+                 </li>
                 <li class="nav-item" th:if="${#httpServletRequest.getSession().getAttribute('usuario')} != null">
                 <a class="nav-link" th:href="@{/logout}">Logout</a>
                 </li>
+                
+                <li class="nav-item" th:if="${#httpServletRequest.getSession().getAttribute('role')} == 'ADMINISTRADOR'">
+                <a class="nav-link" th:href="@{/users}">Usuarios</a>
+                </li>
+                <li class="nav-item" th:if="${#httpServletRequest.getSession().getAttribute('role')} == 'ADMINISTRADOR'">
+                <a class="nav-link" th:href="@{/schools}">Escuelas</a>
+                </li>
+                <li class="nav-item" th:if="${#httpServletRequest.getSession().getAttribute('role')} == 'ADMINISTRADOR'">
+                <a class="nav-link" th:href="@{/courses}">Cursos</a>
+                </li>
+                <li class="nav-item" th:if="${#httpServletRequest.getSession().getAttribute('role')} == 'COORDINADOR'">
+                <a class="nav-link" th:href="@{/students}">Lista de Estudiantes</a>
+                </li>
+                <li class="nav-item" th:if="${#httpServletRequest.getSession().getAttribute('role')} == 'COORDINADOR'">
+                <a class="nav-link" th:href="@{/student/add}">Ingresar Nuevo Estudiante</a>
+                </li>
+         
+               
+                
+                
             </ul>
         </div>
     </nav>
 </header>
 <main layout:fragment="content">
+	<p th:text="${msg}">
 </main>
 <footer class="footer">
     <div class="container">
