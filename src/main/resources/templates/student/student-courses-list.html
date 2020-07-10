@@ -24,7 +24,7 @@
 <main layout:fragment="content">
     <div class="container">
       <h1 class="title" th:text="${student.name + ' ' + student.lastName}"></h1>
-      <a th:href="@{student/records/add}">
+      <a th:href="@{'/student/' + ${student.id} + '/records/add(id=${student.id})'}">
         <button type="submit" class="btn btn-success btn-add">
           <span class="fa fa-plus" aria-hidden="true"></span>
           Agregar nueva materia
@@ -45,9 +45,12 @@
           <th:block th:each="record, row:${student.records}">
             <tr>
               <th scope="row" style="text-align: center;">
-                <button type="submit" class="btn btn-primary">
+              <a th:href="@{/student/{id}/record/edit/{year}/{cycle}/{course}(year=${record.primaryKey.year}, id=${record.primaryKey.student.id}, cycle=${record.primaryKey.semester}, course=${record.primaryKey.course.id})}">
+              	 <button type="submit" class="btn btn-primary">
                   <span class="fa fa-pencil-square-o"></span>
                 </button>
+              </a>
+               
               </th>
               <td th:text="${record.primaryKey.course.name}"></td>
               <td th:text="${record.primaryKey.year}"></td>

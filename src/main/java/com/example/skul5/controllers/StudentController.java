@@ -35,7 +35,7 @@ public class StudentController {
         return vm;
     }
 
-    @GetMapping("/student/{id}/add/record")
+    @GetMapping("/student/{id}/records/add")
     public ModelAndView addRecord(@PathVariable(value = "id") Integer id) {
         ModelAndView vm = new ModelAndView();
         Student s = service.findOne(id);
@@ -51,8 +51,8 @@ public class StudentController {
         return vm;
     }
     
-    @GetMapping("/student/{id}/edit/record/{r_id}")
-    public ModelAndView editRecord(@PathVariable(value = "id") Integer id, @PathVariable(value = "r_id") Integer record_id) {
+    @GetMapping("/student/{id}/records/edit")
+    public ModelAndView editRecord(@PathVariable(value = "id") Integer id) {
         ModelAndView vm = new ModelAndView();
         Student s = service.findOne(id);
         if(s != null) {
