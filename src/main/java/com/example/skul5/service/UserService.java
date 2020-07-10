@@ -12,25 +12,20 @@ import java.util.List;
 @Scope("prototype")
 public class UserService extends Service<User> {
 
-    private final Dao<Municipality> municipalityDao;
-
-    public UserService(Dao<User> dao, Dao<Municipality> municipalityDao) {
+    public UserService(Dao<User> dao) {
         super(dao);
         dao.setType(User.class);
-        municipalityDao.setType(Municipality.class);
-        this.municipalityDao = municipalityDao;
     }
 
     @Override
     public List<User> getAll() {
-        CriteriaQuery<User> query = dao.getQuery();
-        Root<User> root = query.from(User.class);
-        root.fetch("role", JoinType.LEFT);
-        query.select(root);
-        return dao.readAll(query);
-    }
-
-    public List<Municipality> getMunicipalities(){
-        return municipalityDao.readAll();
+        return dao.readAll(cb -> {
+            CriteriaQuery<User> query = cb.createQuery(User.class);
+            Root<User> root = query.from(User.class);
+            root.fetch("role", JoinType.LEFT);
+            query.orderBy(cb.asc(root.get("id")));
+            query.select(root);
+            return query;
+        });
     }
 }

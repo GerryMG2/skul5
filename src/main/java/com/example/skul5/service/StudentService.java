@@ -1,9 +1,8 @@
 package com.example.skul5.service;
 
 import com.example.skul5.dao.Dao;
-import com.example.skul5.domain.Course;
+import com.example.skul5.domain.*;
 import com.example.skul5.domain.Record;
-import com.example.skul5.domain.Student;
 import org.springframework.context.annotation.Scope;
 
 import javax.persistence.criteria.*;
@@ -13,13 +12,10 @@ import java.util.List;
 @Scope("prototype")
 public class StudentService extends Service<Student> {
 
-    private final Dao<Course> dao1;
 
-    public StudentService(Dao<Student> dao, Dao<Course> dao1) {
+    public StudentService(Dao<Student> dao) {
         super(dao);
         dao.setType(Student.class);
-        this.dao1 = dao1;
-        dao1.setType(Course.class);
     }
 
     public Student retrieveOne(Integer code) {
@@ -36,7 +32,13 @@ public class StudentService extends Service<Student> {
     }
 
     public List<Course> getCourses() {
-        return dao1.readAll();
+        return dao.readAll(cb -> {
+            CriteriaQuery<Course> query = cb.createQuery(Course.class);
+            Root<Course> root = query.from(Course.class);
+            query.select(root);
+            query.orderBy(cb.asc(root.get("id")));
+            return query;
+        });
     }
 
     public Record retrieveRecord(Integer year, Integer cycle, Integer courseId, Integer studentId) {
@@ -51,6 +53,16 @@ public class StudentService extends Service<Student> {
             p = cb.and(p, cb.equal(root.get("primaryKey").get("semester"), cycle));
             p = cb.and(p, cb.equal(root.get("primaryKey").get("course").get("id"), courseId));
             query.where(p);
+            query.select(root);
+            return query;
+        });
+    }
+
+    public List<School> retrieveSchools() {
+        return dao.readAll(qb -> {
+            CriteriaQuery<School> query = qb.createQuery(School.class);
+            Root<School> root = query.from(School.class);
+            query.orderBy(qb.asc(root.get("name")));
             query.select(root);
             return query;
         });

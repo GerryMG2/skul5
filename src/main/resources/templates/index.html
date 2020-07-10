@@ -4,58 +4,7 @@
       layout:decorate="~{layout}">
 <body id="top">
 <main layout:fragment="content">
-    <div class="container z-depth-4">
-        <h3 class="center-align">Ingreso de nuevo alumno</h3>
-        <div class="row">
-            <div class="col sm12 m10 l8">
-                <form action="#" method="post" th:action="@{/register}" th:object="${student}">
-                    <div th:if="*{id != null}">
-                        <label for="input-id">Editando:</label>
-                        <input type="number" id="input-id" th:field="*{id}">
-                    </div>
-                    <fieldset name="basic">
-                        <div class="input-field">
-                            <label for="input-name">Nombre</label>
-                            <i class="material-icons prefix">person</i>
-                            <input type="text" id="input-name" th:field="*{name}" class="validate"
-                                   placeholder="Eduardo José"
-                                   aria-describedby="name-help"
-                                   data-length="50">
-                            <small id="name-help" class="helper-text red-text" th:errors="*{name}"></small>
-                        </div>
-                        <div class="input-field">
-                            <label for="input-lastname">Apellido</label>
-                            <i class="material-icons prefix">person</i>
-                            <input type="text" id="input-lastname" th:field="*{lastName}" class="validate"
-                                   placeholder="Flores"
-                                   aria-describedby="last-name-help"
-                                   data-length="50">
-                            <small id="lastname-help" class="helper-text red-text" th:errors="*{lastName}"></small>
-                        </div>
-                    </fieldset>
-                    <fieldset name="about">
-                        <div class="input-field">
-                            <label for="code">Carnet</label>
-                            <i class="material-icons prefix">contact_mail</i>
-                            <input type="text" id="code" th:field="*{license}" class="validate"
-                                   placeholder="00012320"
-                                   aria-describedby="code-help">
-                            <small id="code-help" class="helper-text red-text" th:errors="*{license}"></small>
-                        </div>
-                        <div class="input-field">
-                            <label for="address">Direccion</label>
-                            <i class="material-icons prefix">people</i>
-                            <input type="text" id="address" th:field="*{address}" class="validate"
-                                   placeholder="Ing. informatica"
-                                   aria-describedby="career-help">
-                            <small id="address-help" class="helper-text red-text" th:errors="*{address}"></small>
-                        </div>
-                    </fieldset>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </form>
-            </div>
-        </div>
-    </div>
+
 </main>
 </body>
 </html>

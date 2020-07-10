@@ -32,49 +32,9 @@ public class Dao<T extends Model> {
         this.type = type;
     }
 
-    public CriteriaQuery<T> getQuery() {
-        return em.getCriteriaBuilder().createQuery(type);
-    }
-
-    @Transactional
-    public List<T> readAll() throws DataAccessException {
-        System.out.println("Reading all " + type.getSimpleName() + " from " + type.getPackage());
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<T> query = builder.createQuery(type);
-        Root<T> root = query.from(type);
-        query.select(root);
-        query.orderBy(builder.asc(root.get("id")));
-        return em.createQuery(query).getResultList();
-    }
-
-    @Transactional
-    public List<T> readAll(CriteriaQuery<T> query) throws DataAccessException {
-        System.out.println("Reading criteria " + type.getSimpleName());
-        query.getRoots().forEach(r -> {
-            query.orderBy(em.getCriteriaBuilder().asc(r.get("id")));
-        });
-        return em.createQuery(query).getResultList();
-    }
-
     @Transactional
     public void create(T model) throws DataAccessException {
         em.persist(model);
-    }
-
-    public <G> T getOneByOneField(String field, G value) throws DataAccessException {
-        String tableName = this.type.getAnnotation(Table.class).name();
-        Query q = em.createNativeQuery("SELECT * FROM " + tableName + " WHERE " + field + " = :value ;", this.type);
-        q.setParameter("value", value);
-        return (T) q.getSingleResult();
-    }
-
-    public T findBy(String field, Object value) {
-        CriteriaBuilder qb = em.getCriteriaBuilder();
-        CriteriaQuery<T> query = qb.createQuery(type);
-        Root<T> root = query.from(type);
-        query.where(qb.equal(root.get(field), value));
-        query.select(root);
-        return em.createQuery(query).getSingleResult();
     }
 
     @Transactional
@@ -91,6 +51,39 @@ public class Dao<T extends Model> {
             ex.printStackTrace();
             return null;
         }
+    }
+
+    @Transactional
+    public List<T> readAll() throws DataAccessException {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(type);
+        Root<T> root = query.from(type);
+        query.select(root);
+        query.orderBy(builder.asc(root.get("id")));
+        return em.createQuery(query).getResultList();
+    }
+
+    @Transactional
+    public <K> List<K> readAll(Function<CriteriaBuilder, CriteriaQuery<K>> queryFunction) {
+        CriteriaQuery<K> query = queryFunction.apply(em.getCriteriaBuilder());
+        return em.createQuery(query).getResultList();
+    }
+
+    @Deprecated
+    public <G> T getOneByOneField(String field, G value) throws DataAccessException {
+        String tableName = this.type.getAnnotation(Table.class).name();
+        Query q = em.createNativeQuery("SELECT * FROM " + tableName + " WHERE " + field + " = :value ;", this.type);
+        q.setParameter("value", value);
+        return (T) q.getSingleResult();
+    }
+
+    public T findByField(String field, Object value) {
+        CriteriaBuilder qb = em.getCriteriaBuilder();
+        CriteriaQuery<T> query = qb.createQuery(type);
+        Root<T> root = query.from(type);
+        query.where(qb.equal(root.get(field), value));
+        query.select(root);
+        return em.createQuery(query).getSingleResult();
     }
 
     public <H> List<H> getListOfSommethingWithQuerryFilterByListString(String qr, Class<H> t) {

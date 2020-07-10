@@ -11,7 +11,7 @@
     <div class="container">
         <h3 class="center-align">Lista de estudiante</h3>
         <div class="control">
-            <a th:href="@{student/records/add}" class="btn btn-primary">Nuevo Estudiante</a>
+            <a th:href="@{student/add}" class="btn btn-primary">Nuevo Estudiante</a>
             <form action="/students" class="form-inline" method="get">
             <div class="form-group">
            <select class="form-control" id="exampleFormControlSelect1" name="tipo">
@@ -36,7 +36,10 @@
             </thead>
             <th:block th:each="m, row:${lista}">
                 <tr>
-                    <td><a th:href="@{/student/{id}(id=${m.id})}"><i class="fas fa-edit fa-2x"></i></a></td>
+                    <td>
+                        <a th:href="@{/student/{id}/edit(id=${m.id})}"><i class="fas fa-edit fa-2x"></i></a>
+                        <a th:href="@{/student/{id}(id=${m.id})}"><i class="fas fa-search fa-2x"></i></a>
+                    </td>
                     <td th:text="${m.nombre}"></td>
                     <td th:text="${m.apellido}"></td>
                     <td th:text="${m.materiasa}"></td>

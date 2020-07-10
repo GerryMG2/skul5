@@ -2,9 +2,12 @@ package com.example.skul5.service;
 
 import com.example.skul5.dao.Dao;
 import com.example.skul5.domain.Model;
+import com.example.skul5.domain.Municipality;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +23,6 @@ public class Service<T extends Model> {
 
     public void ConfigureType(Class<T> type){
         dao.setType(type);
-    }
-    
-    public <G> T getOneByOneField(String field,G value) {
-    	return (T) dao.<G>getOneByOneField(field, value);
     }
     
     public <H> List<H> getListOfSommethingWithQuerryFilterByListString(String qr, Class<H> t){
@@ -48,8 +47,8 @@ public class Service<T extends Model> {
         }
     }
 
-    public <K> T findBy(String field, K value){
-        return dao.findBy(field, value);
+    public T findByField(String field, Object value) {
+        return dao.findByField(field, value);
     }
 
     public void save(T model) {
@@ -64,14 +63,14 @@ public class Service<T extends Model> {
         }
     }
 
-    public boolean delete(Integer code) {
-        try {
-            dao.delete(code);
-            return true;
-        } catch (DataAccessException ex) {
-            ex.printStackTrace();
-            return false;
-        }
+    public List<Municipality> getMunicipalities() {
+        return dao.readAll(cb -> {
+            CriteriaQuery<Municipality> query = cb.createQuery(Municipality.class);
+            Root<Municipality> root = query.from(Municipality.class);
+            query.select(root);
+            query.orderBy(cb.asc(root.get("id")));
+            return query;
+        });
     }
 
 }

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body id="top">
+<main layout:fragment="content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-form col-12 col-sm-12 col-md-8 col-lg-6">
+                <form action="#" method="post" th:action="@{/student/add}" th:object="${student}">
+                    <h3 class="center-align" th:text="*{id} == null ? 'Nuevo estudiante': 'Editar estudiante'"></h3>
+                    <div th:if="*{id != null}" class="d-none">
+                        <label for="input-id">Id:</label>
+                        <input type="number" id="input-id" th:field="*{id}" th:readonly="true">
+                    </div>
+                    <fieldset name="basic">
+                        <div class="form-group">
+                            <label for="name">Nombres</label>
+                            <input type="text" th:field="*{name}" class="form-control" id="name"
+                                   aria-describedby="name-help">
+                            <small id="name-help" class="alert alert-danger form-text text-muted"
+                                   th:errors="*{name}"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name">Apellidos</label>
+                            <input type="text" th:field="*{lastName}" class="form-control" id="last-name"
+                                   aria-describedby="last-name-help">
+                            <small id="last-name-help" class="alert alert-danger form-text text-muted"
+                                   th:errors="*{lastName}"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="municipality">Escuela</label>
+                            <select class="form-control" id="municipality" th:field="*{school.id}">
+                                <option th:each="school : ${schools}" th:value="${school.id}"
+                                        th:text="${school.name}">
+                                </option>
+                            </select>
+                            <small id="municipality-help" class="alert alert-danger form-text text-muted"
+                                   th:errors="*{school.id}"></small>
+                        </div>
+                    </fieldset>
+                    <fieldset name="about">
+                        <div class="form-group">
+                            <label for="birth-date">Fecha de nacimiento</label>
+                            <input type="date" class="form-control" id="birth-date" th:field="*{birthDate}">
+                            <small class="alert alert-danger form-text text-muted" th:errors="*{birthDate}"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Dirección</label>
+                            <input type="text" th:field="*{address}" class="form-control" id="address"
+                                   aria-describedby="address-help">
+                            <small id="address-help" class="alert alert-danger form-text text-muted"
+                                   th:errors="*{address}"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="code">Carnet</label>
+                            <i class="material-icons prefix">contact_mail</i>
+                            <input type="text" id="code" th:field="*{license}" class="validate"
+                                   placeholder="00012320"
+                                   aria-describedby="code-help">
+                            <small id="code-help" class="helper-text red-text" th:errors="*{license}"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="telephone">Telefono</label>
+                            <input type="tel" th:field="*{telephone}" class="form-control" id="telephone"
+                                   aria-describedby="telephone-help">
+                            <small id="telephone-help" class="alert alert-danger form-text text-muted"
+                                   th:errors="*{telephone}"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="cellphone">Celular</label>
+                            <input type="tel" th:field="*{cellphone}" class="form-control" id="cellphone"
+                                   aria-describedby="cellphone-help">
+                            <small id="cellphone-help" class="alert alert-danger form-text text-muted"
+                                   th:errors="*{telephone}"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="father-name">Nombre del padre</label>
+                            <input type="text" th:field="*{fatherName}" class="form-control" id="father-name"
+                                   aria-describedby="father-name-help">
+                            <small id="father-name-help" class="alert alert-danger form-text text-muted"
+                                   th:errors="*{fatherName}"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="mother-name">Nombre de la madre</label>
+                            <input type="text" th:field="*{motherName}" class="form-control" id="mother-name"
+                                   aria-describedby="mother-name-help">
+                            <small id="mother-name-help" class="alert alert-danger form-text text-muted"
+                                   th:errors="*{motherName}"></small>
+                        </div>
+                    </fieldset>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

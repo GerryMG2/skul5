@@ -1,5 +1,7 @@
 package com.example.skul5.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -41,6 +43,8 @@ public class Student implements Model {
     private String address;
 
     @Column(name = "birth_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull
     private Date birthDate;
 
     @Column(name = "telephone")
@@ -51,9 +55,9 @@ public class Student implements Model {
     @Size(message = "El celular debe tener minimo 8 caracteres y maximo 32", min = 8, max = 32)
     private String Cellphone;
 
-    @Column(name = "id_school")
-    @NotNull
-    private Integer schoolId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_school")
+    private School school;
 
     @Column(name = "father_name")
     @Size(message = "El nombre del padre debe tener como maximo 32 caracteres", max = 32)
@@ -132,12 +136,12 @@ public class Student implements Model {
         Cellphone = cellphone;
     }
 
-    public Integer getSchoolId() {
-        return schoolId;
+    public School getSchool() {
+        return school;
     }
 
-    public void setSchoolId(Integer schoolId) {
-        this.schoolId = schoolId;
+    public void setSchool(School school) {
+        this.school = school;
     }
 
     public String getFatherName() {
