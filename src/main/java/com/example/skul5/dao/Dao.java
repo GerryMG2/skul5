@@ -71,6 +71,15 @@ public class Dao<T extends Model> {
     	return (T) q.getSingleResult();
     }
 
+    public <K> T findBy(String field, K value) {
+        CriteriaBuilder qb = em.getCriteriaBuilder();
+        CriteriaQuery<T> query = qb.createQuery(type);
+        Root<T> root = query.from(type);
+        query.where(qb.equal(root.get(field), value));
+        query.select(root);
+        return em.createQuery(query).getSingleResult();
+    }
+
     @Transactional
     public T read(Integer id) throws DataAccessException {
         return em.find(type, id);

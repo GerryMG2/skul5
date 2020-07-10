@@ -1,7 +1,6 @@
 package com.example.skul5.controllers;
 
 import com.example.skul5.domain.UserLogin;
-import com.example.skul5.domain.Student;
 import com.example.skul5.domain.User;
 import com.example.skul5.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +23,8 @@ public class MainController {
     @Autowired
 
     public MainController(Service<User> service) {
-    
         this.service = service;
         this.service.ConfigureType(User.class);
-		
-        
     }
 
 

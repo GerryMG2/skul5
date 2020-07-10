@@ -2,11 +2,12 @@ package com.example.skul5.service;
 
 import com.example.skul5.dao.Dao;
 import com.example.skul5.domain.Model;
-import com.sun.istack.internal.Nullable;
+import com.example.skul5.domain.User;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 
-import javax.transaction.Transactional;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,6 @@ public class Service<T extends Model> {
         }
     }
 
-    @Nullable
     public T findOne(Integer code) {
         try {
             return dao.read(code);
@@ -47,7 +47,10 @@ public class Service<T extends Model> {
         }
     }
 
-    @Transactional
+    public <K> T findBy(String field, K value){
+        return dao.findBy(field, value);
+    }
+
     public void save(T model) {
         try {
             if (model.getId() == null) {
@@ -60,7 +63,6 @@ public class Service<T extends Model> {
         }
     }
 
-    @Transactional
     public boolean delete(Integer code) {
         try {
             dao.delete(code);

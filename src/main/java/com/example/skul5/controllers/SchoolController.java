@@ -44,7 +44,7 @@ public class SchoolController {
     public ModelAndView register(@Valid @ModelAttribute School school, BindingResult result) {
         ModelAndView vm = new ModelAndView();
         if (result.hasErrors()) {
-            vm.setViewName("/school/add");
+            vm.setViewName("school/add");
             vm.addObject("school", school);
             vm.addObject("municipalities", service.getMunicipalities());
         } else {
