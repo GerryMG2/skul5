@@ -13,6 +13,7 @@ public class SesionInterceptorCoordinador implements HandlerInterceptor {
 		System.out.println("entro al interceptor coordinador");
 		if(request.getSession().getAttribute("role") != null) {
 			if(request.getSession().getAttribute("role").equals("COORDINADOR")) {
+				System.out.println("es coordinador");
 				return true;
 			}else {
 				response.sendRedirect("/");
