@@ -10,6 +10,8 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
+import com.example.skul5.security.SesionInterceptorAdmin;
+
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
 
@@ -47,7 +49,7 @@ public class WebConfig implements WebMvcConfigurer{
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
     	// TODO Auto-generated method stub
-    	WebMvcConfigurer.super.addInterceptors(registry);
+    	registry.addInterceptor(new SesionInterceptorAdmin()).addPathPatterns(new String[]{"/users/**","/users","/schools/**","/schools","/courses/**","/courses"});
     }
 
 }

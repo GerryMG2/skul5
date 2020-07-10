@@ -5,14 +5,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 
-public class SesionInterceptorAdmin implements HandlerInterceptor {
+public class SesionInterceptorCoordinador implements HandlerInterceptor {
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		System.out.println("entro al interceptor administrador");
+		System.out.println("entro al interceptor coordinador");
 		if(request.getSession().getAttribute("role") != null) {
-			if(request.getSession().getAttribute("role").equals("ADMINISTRADOR")) {
+			if(request.getSession().getAttribute("role").equals("COORDINADOR")) {
 				return true;
 			}else {
 				response.sendRedirect("/");
@@ -26,10 +26,6 @@ public class SesionInterceptorAdmin implements HandlerInterceptor {
 			return false;
 		}
 		
-		
-	
 	}
-	
-	
 
 }

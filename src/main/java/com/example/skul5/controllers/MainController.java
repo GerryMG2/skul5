@@ -45,19 +45,50 @@ public class MainController {
     }
 
     @GetMapping(value = {"/login"})
-    public ModelAndView login() {
+    public ModelAndView login(HttpServletRequest request) {
         ModelAndView vm = new ModelAndView();
-        vm.setViewName("login");
-        vm.addObject("loginRequest", new UserLogin());
+      
+        
+        if(request.getSession().getAttribute("role") != null){
+        	if(request.getSession().getAttribute("role").equals("ADMINISTRADOR")) {
+        		// TODO: redirect to main administrador
+        		vm.setViewName("layout");
+        	}else {
+        		if(request.getSession().getAttribute("role").equals("COORDINADOR")) {
+        			vm.setViewName("layout");
+        			// TODO: redirect to main coordinador
+            	}else {
+            		vm.setViewName("login");
+            		vm.addObject("loginRequest", new UserLogin());
+            	}
+        	}
+        }else {
+        	  vm.setViewName("login");
+        	   vm.addObject("loginRequest", new UserLogin());
+        }
+     
         return vm;
     }
     
     @GetMapping("/logout")
     public ModelAndView logout(HttpServletRequest request) {
         ModelAndView vm = new ModelAndView();
+        System.out.println(request.getSession().getAttribute("usuario"));
+        System.out.println(request.getSession().getAttribute("role"));
+        try {
+        	 User us = (User) service.<String>getOneByOneField("user_name", request.getSession().getAttribute("usuario").toString());
+             us.setActive(false);
+             this.service.save(us);
+             vm.addObject("msg", "El usuario cerro sesion");
+		} catch (Exception e) {
+			
+			// TODO: handle exception
+		}
+       
         request.getSession().invalidate();
         vm.setViewName("login");
-        vm.addObject("loginObject", new UserLogin());
+        vm.addObject("loginRequest", new UserLogin());
+        
         return vm;
     }
     
@@ -71,38 +102,44 @@ public class MainController {
              	String usuario = (String) request.getSession().getAttribute("usuario");
              	System.out.println(usuario);
              	if(usuario == null) {
-             		System.out.println("No esta vacio");
+             		System.out.println(" esta vacio");
              		User us = (User) service.<String>getOneByOneField("user_name", log.getUserName());
-             		if(us.getPassword().equals(log.getPassword()) && (!us.getActive())) {
+             		
+             		if(us.getPassword().equals(log.getPassword()) ) {
              			System.out.println("hay un usurio");
              			//main
-             			request.getSession().setAttribute("usuario", us.getName());
-             			request.getSession().setAttribute("role", us.getRole().getName());
-             			us.setActive(true);
-             			service.save(us);
-             			 vm.setViewName("login");
-             			vm.addObject("loginRequest", new UserLogin());
-             			 vm.addObject("msg", "El usuario se logueo");
-             			//TODO: Redirect here to main page
+             			if(us.getActive()) {
+             				System.out.println("hay un usuario con role en otra cuenta" + request.getSession().getAttribute("role"));
+                    		 vm.setViewName("login");
+                    		 vm.addObject("loginRequest", new UserLogin());
+                    		 vm.addObject("msg", "Hay una sesion activa");
+                    		 
+            				
+             			}else {
+             				request.getSession().setAttribute("usuario", us.getUserName());
+                 			request.getSession().setAttribute("role", us.getRole().getName());
+                 			us.setActive(true);
+                 			service.save(us);
+                 			 vm.setViewName("login");
+                 			vm.addObject("loginRequest", new UserLogin());
+                 			 vm.addObject("msg", "El usuario se logueo");
+                 			//TODO: Redirect here to main page
+             			}
+             			
              			
              			
              		}else {
-             			if(us.getActive()) {
-             				 vm.setViewName("login");
-             				 vm.addObject("loginRequest", new UserLogin());
-             				vm.addObject("msg", "Tienes otra cuenta activa");
-             				
-             			}else {
-             				  vm.setViewName("login");
-             				 vm.addObject("loginRequest", new UserLogin());
-             				 vm.addObject("msg", "El usuario o la contraseña son incorrectos");
-             				  
-             			}
+             			System.out.println("error datos");
+                		 vm.setViewName("login");
+                		 vm.addObject("loginRequest", new UserLogin());
+         				 vm.addObject("msg", "El usuario o la contraseña son incorrectos");
              		}
+             		
              	}else {
-             		System.out.println("esta vacio");
+             		System.out.println("hay un usuario con role" + request.getSession().getAttribute("role"));
              		 vm.setViewName("login");
              		 vm.addObject("loginRequest", new UserLogin());
+             		 vm.addObject("msg", "ya hay una sesion activa");
      				
              		//redirect to main
              	}
@@ -112,12 +149,14 @@ public class MainController {
              }else {
             	 vm.addObject("loginRequest", new UserLogin());
  				 vm.addObject("msg", "El usuario o la contraseña son incorrectos");
+ 				 
              }
 		} catch (Exception e) {
 			System.out.println("hay errores:");
 			  vm.setViewName("login");
 			  e.printStackTrace();
 			  vm.addObject("loginRequest", new UserLogin());
+			  vm.addObject("msg", "algo sucedio");
 			// TODO: handle exception
 		}
        
