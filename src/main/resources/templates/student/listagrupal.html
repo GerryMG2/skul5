@@ -12,6 +12,18 @@
         <h3 class="center-align">Lista de estudiante</h3>
         <div class="control">
             <a th:href="@{student/records/add}" class="btn btn-primary">Nuevo Estudiante</a>
+            <form action="/students" class="form-inline" method="get">
+            <div class="form-group">
+           <select class="form-control" id="exampleFormControlSelect1" name="tipo">
+      <option>Nombre</option>
+      <option>Apellido</option>
+     
+    </select>
+            </div>
+            <input class="form-control mr-sm-2" name="sea" type="search" placeholder="Search" aria-label="Search" th:value="${search}">
+      		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+            
+            </form>
         </div>
         <table class="table table-hover">
             <thead class="thead-dark">

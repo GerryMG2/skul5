@@ -36,25 +36,31 @@ public class StudentController {
 
 
     @GetMapping("/students")
-    public ModelAndView students(@Param("search") String sea) {
+    public ModelAndView students(@Param("tipo") String tipo, @Param("sea") String sea) {
         ModelAndView vm = new ModelAndView();
-        if( sea != null) {
-        	  List<groupStudentRecord> lista = this.service.getListOfSommethingWithQuerryFilterByListString("select a.id_student as id, b.name as nombre,b.last_name as apellido, sum(case when a.grade > 5 then 1 else 0 end) as materiasa," +
+        if( sea != null && sea != "") {
+        	String add = "";
+        	System.out.println(tipo);
+        	if(tipo.equals("Nombre")) {
+        		add = "Upper(b.name) like ";
+        	}else {
+        		add = "Upper(b.last_name) like";
+        	}
+        	  List<groupStudentRecord> lista = this.service.getListOfSommethingWithQuerryFilterByListString(
+        			  "select a.id_student as id, b.name as nombre,b.last_name as apellido, sum(case when a.grade > 5 then 1 else 0 end) as materiasa," +
               		"sum(case when a.grade <= 5 then 1 else 0 end) as materiasr" +
               		", avg(a.grade) promedio " +
               		"from record a"
               		+ " left outer join student b on a.id_student = b.id "
               		+ "where "
-              		+ "b.name like "
+              		+ add
               		+ "'%"
-              		+ sea
+              		+ sea.toUpperCase()
               		+"%' "
-              		+ "and "
-              		+ "b.last_name like '%"
-              		+ sea +
-              		"%'  group by a.id_student, b.name, b.last_name  ;", groupStudentRecord.class );
+              +"  group by a.id_student, b.name, b.last_name  ;", groupStudentRecord.class );
               System.out.println(lista);
               vm.addObject("lista", lista);
+              vm.addObject("search", sea);
         }else {
         	  List<groupStudentRecord> lista = this.service.getListOfSommethingWithQuerryFilterByListString("select a.id_student as id, b.name as nombre,b.last_name as apellido, sum(case when a.grade > 5 then 1 else 0 end) as materiasa," +
               		"sum(case when a.grade <= 5 then 1 else 0 end) as materiasr" +
