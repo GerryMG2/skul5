@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Records</title>
+</head>
+<body>
+<main layout:fragment="content">
+    
+    <div class="container">
+        <h3 class="center-align">Lista de estudiante</h3>
+        <div class="control">
+            <a th:href="@{student/records/add}" class="btn btn-primary">Nuevo Estudiante</a>
+        </div>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <th>Accion</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Materias aprobadas</th>
+            <th>Materias reprobadas</th>
+            <th>Promedio</th>
+            </thead>
+            <th:block th:each="m, row:${lista}">
+                <tr>
+                    <td><a th:href="@{/student/{id}(id=${m.id})}"><i class="fas fa-edit fa-2x"></i></a></td>
+                    <td th:text="${m.nombre}"></td>
+                    <td th:text="${m.apellido}"></td>
+                    <td th:text="${m.materiasa}"></td>
+                    <td th:text="${m.materiasr}"></td>
+                    <td th:text="${m.promedio}"></td>
+                </tr>
+            </th:block>
+        </table>
+    </div>
+</main>
+</body>
+</html>

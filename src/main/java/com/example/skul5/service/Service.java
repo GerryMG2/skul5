@@ -28,6 +28,10 @@ public class Service<T extends Model> {
     public <G> T getOneByOneField(String field,G value) {
     	return (T) dao.<G>getOneByOneField(field, value);
     }
+    
+    public <H> List<H> getListOfSommethingWithQuerryFilterByListString(String qr, Class<H> t){
+    	return dao.<H>getListOfSommethingWithQuerryFilterByListString(qr, t);
+    }
 
     public List<T> getAll() {
         try {
