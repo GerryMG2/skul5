@@ -20,14 +20,15 @@
         <a class="navbar-brand" th:href="@{/}">
             Skul 5
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse flex-column align-items-end" id="navbarSupportedContent">
             <ul class="social">
                 <li>
                     <a href="https://github.com/GerryMG2/skul5">
-                    <i class="fab fa-github fa-2x"></i>
+                        <i class="fab fa-github fa-2x"></i>
                     </a>
                 </li>
                 <li>
@@ -38,38 +39,37 @@
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI} == '/' ? 'active':''">
-                <a class="nav-link" th:href="@{/}">Inicio</a>
+                    <a class="nav-link" th:href="@{/}">Inicio</a>
                 </li>
-                 </li>
+                </li>
                 <li class="nav-item" th:if="${#httpServletRequest.getSession().getAttribute('usuario')} != null">
-                <a class="nav-link" th:href="@{/logout}">Logout</a>
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
                 </li>
-                
-                <li class="nav-item" th:if="${#httpServletRequest.getSession().getAttribute('role')} == 'ADMINISTRADOR'">
-                <a class="nav-link" th:href="@{/users}">Usuarios</a>
+
+                <li class="nav-item"
+                    th:if="${#httpServletRequest.getSession().getAttribute('role')} == 'ADMINISTRADOR'">
+                    <a class="nav-link" th:href="@{/users}">Usuarios</a>
                 </li>
-                <li class="nav-item" th:if="${#httpServletRequest.getSession().getAttribute('role')} == 'ADMINISTRADOR'">
-                <a class="nav-link" th:href="@{/schools}">Escuelas</a>
+                <li class="nav-item"
+                    th:if="${#httpServletRequest.getSession().getAttribute('role')} == 'ADMINISTRADOR'">
+                    <a class="nav-link" th:href="@{/schools}">Escuelas</a>
                 </li>
-                <li class="nav-item" th:if="${#httpServletRequest.getSession().getAttribute('role')} == 'ADMINISTRADOR'">
-                <a class="nav-link" th:href="@{/courses}">Cursos</a>
+                <li class="nav-item"
+                    th:if="${#httpServletRequest.getSession().getAttribute('role')} == 'ADMINISTRADOR'">
+                    <a class="nav-link" th:href="@{/courses}">Cursos</a>
                 </li>
                 <li class="nav-item" th:if="${#httpServletRequest.getSession().getAttribute('role')} == 'COORDINADOR'">
-                <a class="nav-link" th:href="@{/students}">Lista de Estudiantes</a>
+                    <a class="nav-link" th:href="@{/students}">Lista de Estudiantes</a>
                 </li>
                 <li class="nav-item" th:if="${#httpServletRequest.getSession().getAttribute('role')} == 'COORDINADOR'">
-                <a class="nav-link" th:href="@{/student/add}">Ingresar Nuevo Estudiante</a>
+                    <a class="nav-link" th:href="@{/student/add}">Ingresar Nuevo Estudiante</a>
                 </li>
-         
-               
-                
-                
             </ul>
         </div>
     </nav>
 </header>
 <main layout:fragment="content">
-	<p th:text="${msg}">
+    <p th:text="${msg}">
 </main>
 <footer class="footer">
     <div class="container">
@@ -86,13 +86,7 @@
                         00088116
                     </li>
                     <li>
-                        000
-                    </li>
-                    <li>
-                        000
-                    </li>
-                    <li>
-                        000
+                        00032515
                     </li>
                 </ul>
             </div>
@@ -134,7 +128,5 @@
     </div>
 </footer>
 <script src="https://kit.fontawesome.com/17d99f8d97.js" crossorigin="anonymous"></script>
-<script src="webjars/bootstrap/4.5.0/js/bootstrap.js" crossorigin="anonymous"></script>
-
 </body>
 </html>

@@ -88,6 +88,7 @@ public class Dao<T extends Model> {
         try {
             return em.createQuery(query).getSingleResult();
         } catch (NoResultException | NonUniqueResultException ex) {
+            ex.printStackTrace();
             return null;
         }
     }

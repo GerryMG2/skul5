@@ -23,7 +23,11 @@
             </thead>
             <th:block th:each="record, row:${student.records}">
                 <tr>
-                    <td><a><i class="fas fa-edit fa-2x"></i></a></td>
+                    <td>
+                        <a th:href="@{/student/{id}/record/edit/{year}/{cycle}/{course}(year=${record.primaryKey.year}, id=${record.primaryKey.student.id}, cycle=${record.primaryKey.semester}, course=${record.primaryKey.course.id})}">
+                            <i class="fas fa-edit fa-2x"></i>
+                        </a>
+                    </td>
                     <td th:text="${record.primaryKey.course.name}"></td>
                     <td th:text="${record.primaryKey.year}"></td>
                     <td th:text="${record.primaryKey.semester}"></td>

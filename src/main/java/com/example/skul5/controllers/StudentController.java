@@ -110,6 +110,7 @@ public class StudentController {
             setNotFound(vm);
             return vm;
         }
+        setStudentView(id, r, vm);
         return vm;
     }
 

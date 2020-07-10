@@ -1,0 +1,10 @@
+Configurar variables de entorno:
+
+
+Restaurar base de datos o correr script database.sql
+
+Ingresar al sitio en http://localhost:8080
+
+Usuario administrador
+
+Usuario coordinador

@@ -46,10 +46,11 @@ public class StudentService extends Service<Student> {
             Fetch<Object, Object> pk = root.fetch("primaryKey");
             pk.fetch("student", JoinType.LEFT);
             pk.fetch("course", JoinType.LEFT);
-            query.where(cb.equal(root.get("id").get("primaryKey").get("student").get("id"), studentId));
-            query.where(cb.equal(root.get("id").get("primaryKey").get("year"), year));
-            query.where(cb.equal(root.get("id").get("primaryKey").get("semester"), cycle));
-            query.where(cb.equal(root.get("id").get("primaryKey").get("course").get("id"), courseId));
+            Predicate p = cb.equal(root.get("primaryKey").get("student").get("id"), studentId);
+            p = cb.and(p, cb.equal(root.get("primaryKey").get("year"), year));
+            p = cb.and(p, cb.equal(root.get("primaryKey").get("semester"), cycle));
+            p = cb.and(p, cb.equal(root.get("primaryKey").get("course").get("id"), courseId));
+            query.where(p);
             query.select(root);
             return query;
         });
