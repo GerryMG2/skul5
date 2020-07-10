@@ -2,11 +2,13 @@ package com.example.skul5.service;
 
 import com.example.skul5.dao.Dao;
 import com.example.skul5.domain.Model;
-import com.sun.istack.internal.Nullable;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.Null;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,7 @@ public class Service<T extends Model> {
         }
     }
 
-    @Nullable
+    @Null
     public T findOne(Integer code) {
         try {
             return dao.read(code);

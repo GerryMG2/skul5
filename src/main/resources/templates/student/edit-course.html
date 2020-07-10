@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+	 <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+    <!-- Custom css -->
+    <link rel="stylesheet" href="/css/styles.css" />
+    
+    <link
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    
+    <title>Editar Materia</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="container wrapper">
+      <div class="subcontainer">
+        <h1 class="title">Editar Materia</h1>
+        <h2 class="title" th:text="'Expediente: ' + ${student.name} + ' ' + ${student.lastName}"></h2>
+        <form method="post" th:action="@{/student/x/course/add}" th:object="${record}">
+          <div class="form-row">
+            <div class="col-md-8 mb-3">
+              <label for="materia">Materia</label>
+              <select id="materia" class="form-control" th:field="*{primaryKey.course.id}" th:value="${record.id}" required>
+                <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+              </select>
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-4 mb-3">
+              <label for="anio">Año</label>
+              <select id="anio" class="form-control" th:field="*{primaryKey.year}" th:value="${record.annio}">
+                <option value="1">2015</option>
+                <option value="2">2016</option>
+                <option value="3">2017</option>
+                <option value="4">2018</option>
+                <option value="5">2019</option>
+                <option value="6">2020</option>
+                <option value="7">2021</option>
+              </select>
+              <div class="invalid-feedback" th:errors="*{primaryKey.year}"></div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="ciclo">Ciclo</label>
+              <select id="ciclo" class="form-control" th:field="*{primaryKey.semester}" th:value="${record.semester}">
+                <option value="1">Ciclo 01</option>
+                <option value="2">Ciclo 02</option>
+                <option value="3">Ciclo 03</option>
+              </select>
+              <div class="invalid-feedback" th:errors="*{primaryKey.semester}"></div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-2 mb-3">
+              <label for="nota">Nota</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nota"
+                placeholder="7.5"
+                th:field="*{grade}"
+                th:value="${record.grade}"
+              />
+              <div class="invalid-feedback" th:errors="*{grade}"></div>
+            </div>
+          </div>
+
+          <div class="btn-wrapper">
+            <button type="submit" class="btn btn-warning btn-clean">
+              <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+              Limpiar todo
+            </button>
+            <div class="btn-container">
+              <button type="button" class="btn btn-outline-primary btn-large">
+                <span class="fa fa-arrow-left" aria-hidden="true"></span>
+                Atrás
+              </button>
+              <button type="submit" class="btn btn-primary btn-extra-large">
+                Guardar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+</main>
+</body>
+</html>

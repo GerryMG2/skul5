@@ -26,7 +26,7 @@ public class StudentController {
         ModelAndView vm = new ModelAndView();
         Student s = service.retrieveOne(id);
         if(s != null) {
-            vm.setViewName("student/records");
+            vm.setViewName("student/student-courses-list");
             vm.addObject("student", s);
         } else {
             vm.setViewName("util/404");
@@ -40,7 +40,23 @@ public class StudentController {
         ModelAndView vm = new ModelAndView();
         Student s = service.findOne(id);
         if(s != null) {
-            vm.setViewName("student/course");
+            vm.setViewName("student/add-course");
+            vm.addObject("student", s);
+            vm.addObject("course", new Record());
+            vm.addObject("courses", service.getCourses());
+        } else {
+            vm.setViewName("util/404");
+            vm.addObject("message", "Estudiante no encontrado");
+        }
+        return vm;
+    }
+    
+    @GetMapping("/student/{id}/edit/record/{r_id}")
+    public ModelAndView editRecord(@PathVariable(value = "id") Integer id, @PathVariable(value = "r_id") Integer record_id) {
+        ModelAndView vm = new ModelAndView();
+        Student s = service.findOne(id);
+        if(s != null) {
+            vm.setViewName("student/edit-course");
             vm.addObject("student", s);
             vm.addObject("course", new Record());
             vm.addObject("courses", service.getCourses());
