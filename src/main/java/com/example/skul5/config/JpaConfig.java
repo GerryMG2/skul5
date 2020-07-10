@@ -32,9 +32,9 @@ public class JpaConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://127.0.0.1:5432/proyecto");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("clouds77");
+        dataSource.setUrl(System.getenv("URI_POSTGRES"));
+        dataSource.setUsername(System.getenv("USERNAME_POSTGRES"));
+        dataSource.setPassword(System.getenv("PASSWORD_POSTGRES"));
         return dataSource;
     }
 
