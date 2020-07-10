@@ -8,13 +8,13 @@
 <body>
 <main layout:fragment="content">
     <div class="container">
-        <form method="post" th:action="@{/student/x/course/add}" th:object="${course}">
-            <h3 class="center-align" th:text="'Expediente: ' + ${student.name} + ' ' + ${student.lastName}"></h3>
+        <form method="post" th:action="@{/student/{id}/record/add(id=${record.primaryKey.student.id})}" th:object="${record}">
+            <h3 class="center-align" th:text="'Expediente: ' + ${record.primaryKey.student.name} + ' ' + ${record.primaryKey.student.lastName}"></h3>
             <div class="form-group">
-                <label for="name">Año</label>
-                <input type="number" th:field="*{primaryKey.year}" class="form-control" id="name"
-                       aria-describedby="name-help">
-                <small id="name-help" class="alert alert-danger form-text text-muted"
+                <label for="year">Año</label>
+                <input id="year" type="number" th:field="*{primaryKey.year}" class="form-control"
+                       aria-describedby="year-help">
+                <small id="year-help" class="alert alert-danger form-text text-muted"
                        th:errors="*{primaryKey.year}"></small>
             </div>
             <div class="form-group">

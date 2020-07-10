@@ -24,7 +24,6 @@ public class StudentService extends Service<Student> {
 
     public Student retrieveOne(Integer code) {
         return dao.read(qb -> {
-            ArrayList<Order> order = new ArrayList<>();
             CriteriaQuery<Student> query = qb.createQuery(Student.class);
             Root<Student> root = query.from(Student.class);
             root.fetch("records", JoinType.LEFT)

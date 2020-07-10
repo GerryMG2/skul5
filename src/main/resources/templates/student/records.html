@@ -10,7 +10,7 @@
     <div class="container">
         <h3 class="center-align" th:text="${student.name + ' ' + student.lastName}"></h3>
         <div class="control">
-            <a th:href="@{student/records/add}" class="btn btn-primary">Nuevo Registro</a>
+            <a th:href="@{/student/{id}/record/add(id=${student.id})}" class="btn btn-primary">Nuevo Registro</a>
         </div>
         <table class="table table-hover">
             <thead class="thead-dark">
