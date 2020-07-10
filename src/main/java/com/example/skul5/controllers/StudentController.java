@@ -8,7 +8,6 @@ import com.example.skul5.service.StudentService;
 
 import java.util.List;
 
-import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.HashSet;
 
 @Controller
 @Component
@@ -77,7 +75,6 @@ public class StudentController {
     }
 
 
-
     @GetMapping("/student/{id}")
     public ModelAndView records(@PathVariable(value = "id") Integer id) {
         ModelAndView vm = new ModelAndView();
@@ -86,8 +83,7 @@ public class StudentController {
             vm.setViewName("student/records");
             vm.addObject("student", s);
         } else {
-            vm.setViewName("util/404");
-            vm.addObject("message", "Estudiante no encontrado");
+            setNotFound(vm);
         }
         return vm;
     }
@@ -98,6 +94,22 @@ public class StudentController {
         Record record = new Record();
         record.setPrimaryKey(new RecordId());
         setStudentView(id, record, vm);
+        return vm;
+    }
+
+    @GetMapping("/student/{id}/record/edit/{year}/{cycle}/{course}")
+    public ModelAndView addRecord(
+            @PathVariable(value = "id") Integer id,
+            @PathVariable(value = "year") Integer year,
+            @PathVariable(value = "cycle") Integer cycle,
+            @PathVariable(value = "course") Integer course
+    ) {
+        ModelAndView vm = new ModelAndView();
+        Record r = service.retrieveRecord(year, cycle, course, id);
+        if (r == null) {
+            setNotFound(vm);
+            return vm;
+        }
         return vm;
     }
 
@@ -112,8 +124,7 @@ public class StudentController {
             vm.addObject("url", "/student/" + id);
             Student s = service.retrieveOne(id);
             if (s == null) {
-                vm.setViewName("util/404");
-                vm.addObject("message", "Estudiante no encontrado");
+                setNotFound(vm);
                 return vm;
             } else {
                 boolean wasFound = false;
@@ -147,14 +158,14 @@ public class StudentController {
             vm.addObject("record", record);
             vm.addObject("courses", service.getCourses());
         } else {
-            vm.setViewName("util/404");
-            vm.addObject("message", "Estudiante no encontrado");
+            setNotFound(vm);
         }
     }
 
-
-
-
+    private void setNotFound(ModelAndView vm) {
+        vm.setViewName("util/404");
+        vm.addObject("message", "Estudiante no encontrado");
+    }
 
 
 }

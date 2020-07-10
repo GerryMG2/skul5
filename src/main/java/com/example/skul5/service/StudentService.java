@@ -2,11 +2,11 @@ package com.example.skul5.service;
 
 import com.example.skul5.dao.Dao;
 import com.example.skul5.domain.Course;
+import com.example.skul5.domain.Record;
 import com.example.skul5.domain.Student;
 import org.springframework.context.annotation.Scope;
 
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -37,5 +37,21 @@ public class StudentService extends Service<Student> {
 
     public List<Course> getCourses() {
         return dao1.readAll();
+    }
+
+    public Record retrieveRecord(Integer year, Integer cycle, Integer courseId, Integer studentId) {
+        return dao.read(cb -> {
+            CriteriaQuery<Record> query = cb.createQuery(Record.class);
+            Root<Record> root = query.from(Record.class);
+            Fetch<Object, Object> pk = root.fetch("primaryKey");
+            pk.fetch("student", JoinType.LEFT);
+            pk.fetch("course", JoinType.LEFT);
+            query.where(cb.equal(root.get("id").get("primaryKey").get("student").get("id"), studentId));
+            query.where(cb.equal(root.get("id").get("primaryKey").get("year"), year));
+            query.where(cb.equal(root.get("id").get("primaryKey").get("semester"), cycle));
+            query.where(cb.equal(root.get("id").get("primaryKey").get("course").get("id"), courseId));
+            query.select(root);
+            return query;
+        });
     }
 }

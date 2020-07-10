@@ -5,10 +5,7 @@ import com.example.skul5.util.PersistenceInfo;
 
 import java.util.List;
 import java.util.function.Function;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -63,17 +60,15 @@ public class Dao<T extends Model> {
     public void create(T model) throws DataAccessException {
         em.persist(model);
     }
-    
-    
-    
-    public  <G>  T  getOneByOneField(String field,G value ) throws DataAccessException {
-    	String tableName = this.type.getAnnotation(Table.class).name();
-    	Query q = em.createNativeQuery("SELECT * FROM "+tableName +" WHERE "+field+ " = :value ;",this.type);
-    	q.setParameter("value", value);
-    	return (T) q.getSingleResult();
+
+    public <G> T getOneByOneField(String field, G value) throws DataAccessException {
+        String tableName = this.type.getAnnotation(Table.class).name();
+        Query q = em.createNativeQuery("SELECT * FROM " + tableName + " WHERE " + field + " = :value ;", this.type);
+        q.setParameter("value", value);
+        return (T) q.getSingleResult();
     }
 
-    public <K> T findBy(String field, K value) {
+    public T findBy(String field, Object value) {
         CriteriaBuilder qb = em.getCriteriaBuilder();
         CriteriaQuery<T> query = qb.createQuery(type);
         Root<T> root = query.from(type);
@@ -86,23 +81,20 @@ public class Dao<T extends Model> {
     public T read(Integer id) throws DataAccessException {
         return em.find(type, id);
     }
-    
-    public <H> List<H> getListOfSommethingWithQuerryFilterByListString(String qr,Class<H> t) {
-    	
-    	
-    	Query q = em.createNativeQuery(qr,t);
-    	
-    	return q.getResultList();
-    }
 
     @Transactional
-    public T read(Function<CriteriaBuilder, CriteriaQuery<T>> queryFunction) throws DataAccessException {
-        CriteriaQuery<T> query = queryFunction.apply(em.getCriteriaBuilder());
-        List<T> res = em.createQuery(query).getResultList();
-        if (res.size() > 0) {
-            return res.get(0);
+    public <K> K read(Function<CriteriaBuilder, CriteriaQuery<K>> queryFunction) throws DataAccessException {
+        CriteriaQuery<K> query = queryFunction.apply(em.getCriteriaBuilder());
+        try {
+            return em.createQuery(query).getSingleResult();
+        } catch (NoResultException | NonUniqueResultException ex) {
+            return null;
         }
-        return null;
+    }
+
+    public <H> List<H> getListOfSommethingWithQuerryFilterByListString(String qr, Class<H> t) {
+        Query q = em.createNativeQuery(qr, t);
+        return q.getResultList();
     }
 
     @Transactional

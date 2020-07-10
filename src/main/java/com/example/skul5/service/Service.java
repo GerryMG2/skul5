@@ -2,12 +2,9 @@ package com.example.skul5.service;
 
 import com.example.skul5.dao.Dao;
 import com.example.skul5.domain.Model;
-import com.example.skul5.domain.User;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
