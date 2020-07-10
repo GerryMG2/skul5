@@ -73,7 +73,7 @@ public class MainController {
         System.out.println(request.getSession().getAttribute("role"));
         try {
         	 User us = (User) service.<String>getOneByOneField("user_name", request.getSession().getAttribute("usuario").toString());
-             us.setActive(false);
+             us.setSessionOpen(false);
              this.service.save(us);
              vm.addObject("msg", "El usuario cerro sesion");
 		} catch (Exception e) {
@@ -101,10 +101,10 @@ public class MainController {
              		System.out.println(" esta vacio");
              		User us = (User) service.<String>getOneByOneField("user_name", log.getUserName());
              		
-             		if(us.getPassword().equals(log.getPassword()) ) {
+             		if(us.getPassword().equals(log.getPassword()) && us.getActive() ) {
              			System.out.println("hay un usurio");
              			//main
-             			if(us.getActive()) {
+             			if(us.getSessionOpen()) {
              				System.out.println("hay un usuario con role en otra cuenta" + request.getSession().getAttribute("role"));
                     		 vm.setViewName("login");
                     		 vm.addObject("loginRequest", new UserLogin());
@@ -114,7 +114,7 @@ public class MainController {
              			}else {
              				request.getSession().setAttribute("usuario", us.getUserName());
                  			request.getSession().setAttribute("role", us.getRole().getName());
-                 			us.setActive(true);
+                 			us.setSessionOpen(true);
                  			service.save(us);
                  			 vm.setViewName("login");
                  			vm.addObject("loginRequest", new UserLogin());
