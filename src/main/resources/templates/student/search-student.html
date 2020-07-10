@@ -25,17 +25,19 @@
     <div class="container wrapper">
       <div class="subcontainer">
         <h1 class="title">Expedientes de alumnos</h1>
-        <form th:action="@{/records}">
-          <button type="submit" class="btn btn-success btn-add" value="add">
-            <span class="fa fa-plus" aria-hidden="true"></span>
-            Agregar nuevo expediente
-          </button>
+        <form th:action="@{/students}"  method="get">
+        	<a th:href="@{student/records/add}">
+        		<button type="submit" class="btn btn-success btn-add" value="add">
+		            <span class="fa fa-plus" aria-hidden="true"></span>
+		            Agregar nuevo expediente
+	          	</button>
+        	</a>
           <div class="form-group">
             <label for="inputCriterio">Buscar Alumno por</label>
 
-            <select id="inputCriterio" class="form-control">
-              <option selected>Seleccione criterio...</option>
-              <option>...</option>
+            <select id="inputCriterio" class="form-control" name="tipo" type="search" th:value="${search}">
+              <option selected>Nombre</option>
+              <option>Apellido</option>
             </select>
             <div class="invalid-feedback"></div>
           </div>
@@ -47,6 +49,7 @@
                 class="form-control"
                 id="search"
                 placeholder="Roberto Ramírez"
+                name="sea"
               />
               <div class="invalid-feedback"></div>
             </div>

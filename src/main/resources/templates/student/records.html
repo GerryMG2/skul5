@@ -24,7 +24,7 @@
 <main layout:fragment="content">
     <div class="container">
       <h1 class="title" th:text="${student.name + ' ' + student.lastName}"></h1>
-      <a th:href="@{'/student/' + ${student.id} + '/records/add(id=${student.id})'}">
+      <a th:href="@{'/student/' + ${student.id} + '/record/add'}">
         <button type="submit" class="btn btn-success btn-add">
           <span class="fa fa-plus" aria-hidden="true"></span>
           Agregar nueva materia

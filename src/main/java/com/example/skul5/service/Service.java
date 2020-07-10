@@ -2,12 +2,8 @@ package com.example.skul5.service;
 
 import com.example.skul5.dao.Dao;
 import com.example.skul5.domain.Model;
-
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
-
-import javax.transaction.Transactional;
-import javax.validation.constraints.Null;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +21,14 @@ public class Service<T extends Model> {
     public void ConfigureType(Class<T> type){
         dao.setType(type);
     }
+    
+    public <G> T getOneByOneField(String field,G value) {
+    	return (T) dao.<G>getOneByOneField(field, value);
+    }
+    
+    public <H> List<H> getListOfSommethingWithQuerryFilterByListString(String qr, Class<H> t){
+    	return dao.<H>getListOfSommethingWithQuerryFilterByListString(qr, t);
+    }
 
     public List<T> getAll() {
         try {
@@ -35,7 +39,6 @@ public class Service<T extends Model> {
         }
     }
 
-    @Null
     public T findOne(Integer code) {
         try {
             return dao.read(code);
@@ -45,7 +48,10 @@ public class Service<T extends Model> {
         }
     }
 
-    @Transactional
+    public <K> T findBy(String field, K value){
+        return dao.findBy(field, value);
+    }
+
     public void save(T model) {
         try {
             if (model.getId() == null) {
@@ -58,7 +64,6 @@ public class Service<T extends Model> {
         }
     }
 
-    @Transactional
     public boolean delete(Integer code) {
         try {
             dao.delete(code);
