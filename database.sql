@@ -1,6 +1,6 @@
 CREATE TABLE ROLE
 (
-    ID   PRIMARY KEY,
+    ID   SERIAL PRIMARY KEY,
     NAME VARCHAR(256) UNIQUE NOT NULL
 );
 
@@ -173,10 +173,14 @@ VALUES ('IZALCO', 1),
        ('ILOBASCO', 14);
 
 -- DATOS PARA USUARIO
-INSERT INTO USUARIO (name, last_name, role_id, sesion, active, passwd, user_name, birth_date, id_municipality, address)
-VALUES ('JOSE', 'PINEDA', 1, false, true, '9aae0240e0e02983a5462a4914fe6bc3db91d41ff9a36b4ff22bc06e38e11628', 'jpineda', '1988-08-17', 14, 'La campanera senda 15 poniente'),
-('RAUL', 'HERRERA', 2, false, true, '6484e7fe84f02520350861bcf8d052590cc332de2465049e37e1f87232bdea5e', 'rherrera', '1995-12-14', 16, 'Condominio Arboledas 520'),
-('ANDRES', 'PEREZ', 2, false, true, '40576429e7d72bf17dbcc4fa1f8d2faf9ad0ceb50bbff41b5a50da9963e271d3', 'aperez', '1991-07-13', 16, 'Colonia Escalon pasaje 6');
+INSERT INTO public.usuario (name, last_name, role_id, sesion, active, passwd, user_name, birth_date, id_municipality, address) VALUES ('RAUL', 'HERRERA', 2, false, true, '6484e7fe84f02520350861bcf8d052590cc332de2465049e37e1f87232bdea5e', 'rherrera', '1995-12-14', 16, 'Condominio Arboledas 520');
+INSERT INTO public.usuario (name, last_name, role_id, sesion, active, passwd, user_name, birth_date, id_municipality, address) VALUES ('jito', 'majo', 1, false, false, 'rapidito', 'majito', '2020-07-15', 24, 'en tu casa');
+INSERT INTO public.usuario (name, last_name, role_id, sesion, active, passwd, user_name, birth_date, id_municipality, address) VALUES ('Mauricio', 'PEREZ', 2, false, true, '12345', 'aperez', '1991-07-13', 16, 'Colonia Escalon pasaje 8');
+INSERT INTO public.usuario (name, last_name, role_id, sesion, active, passwd, user_name, birth_date, id_municipality, address) VALUES ('predro', 'fernandez', 1, false, true, '12345', 'jpineda', '1988-08-17', 14, 'La campanera senda 15 poniente');
+INSERT INTO public.usuario (name, last_name, role_id, sesion, active, passwd, user_name, birth_date, id_municipality, address) VALUES ('carlos', 'rolando', 2, false, true, 'admin', 'barrabas', '2020-05-13', 13, 'admin');
+INSERT INTO public.usuario (name, last_name, role_id, sesion, active, passwd, user_name, birth_date, id_municipality, address) VALUES ('Yury', 'Castro', 1, false, true, '1234', 'ycastro', '1995-12-14', 5, 'por alli');
+INSERT INTO public.usuario (name, last_name, role_id, sesion, active, passwd, user_name, birth_date, id_municipality, address) VALUES ('minaj', 'rosado', 1, false, false, 'sdfsdfss', 'mijangosdsdf', '2020-07-22', 15, 'Su casa');
+INSERT INTO public.usuario (name, last_name, role_id, sesion, active, passwd, user_name, birth_date, id_municipality, address) VALUES ('jaime', 'mendez', 2, false, true, 'simon', 'jmendex', '2020-07-09', 18, 'Colonia Escalon pasaje 8');
 
 -- DATOS PARA CENTROS
 INSERT INTO SCHOOL (NAME, MUNICIPALITY_ID)
@@ -406,6 +410,31 @@ VALUES ('CENTRO ESCOLAR COMUNIDAD EL BAMBU CASERIO ROSARIO DE CEREN CANTON EL SU
        ('CENTRO ESCOLAR CASERIO SAN LUIS GRAMAL CANTON SAN FRANCISCO DEL MONTE', 56);
 
 -- DATOS PARA ESTUDIANTE
+
+INSERT INTO STUDENT (name, last_name, license, address, birth_date, telephone, cellphone, id_school, father_name, mother_name)
+VALUES ('Rodrigo Josue', 'Villeda Cruz', '000000001', 'El manguito, senda 14', '1998-01-01', '20222345', '724423432', 1, 'Juan', 'Rosa'),
+('Francisco Jose', 'Paredes Guerra', '000000005', 'La rosa, Senda 15', '1986-10-22', '27787885', '774776578', 1, 'Fulano', 'Teresa'),
+('Marcos Sebastian', 'Quintanilla Hernandez', '000000003', 'El encuentro, Senda 22', '1995-05-07', '21535435', '743243649', 1, 'Armando', 'Gabriela'),
+('Adrian Alonso', 'Hernandez Paredes', '000000004', 'El limon, Senda 18', '1990-03-30', '25528523', '742535258', 1, 'Jose', 'Maria'),
+('Alfredo Ruben', 'Cruz Quintanilla', '000000002', 'Las moras, Senda 12', '2000-07-05', '22574588', '775847855', 1, 'Julian', 'Mercedes'),
+('josesito', 'asals', '789654123', 'salsnalsk', '2020-07-16', '78945612', '12345678', 94, '', ''),
+('abigail', 'montez', '000381177', '123 park way av', '2020-07-22', '98785456', '77411525', 2, '', '');
+
 -- DATOS PARA MATERIA
+INSERT INTO public.course (name) VALUES ('matematica');
+INSERT INTO public.course (name) VALUES ('Física');
+INSERT INTO public.course (name) VALUES ('Historia');
+INSERT INTO public.course (name) VALUES ('Filosofia');
+
 -- DATOS PARA REGISTRO
+INSERT INTO public.record (annio, semester, id_student, id_course, grade) VALUES (2020, 1, 1, 2, 5.9);
+INSERT INTO public.record (annio, semester, id_student, id_course, grade) VALUES (2020, 1, 1, 1, 8);
+INSERT INTO public.record (annio, semester, id_student, id_course, grade) VALUES (2019, 1, 2, 2, 8);
+INSERT INTO public.record (annio, semester, id_student, id_course, grade) VALUES (2019, 2, 4, 1, 9);
+INSERT INTO public.record (annio, semester, id_student, id_course, grade) VALUES (2019, 2, 4, 2, 10);
+INSERT INTO public.record (annio, semester, id_student, id_course, grade) VALUES (2019, 2, 1, 2, 3);
+INSERT INTO public.record (annio, semester, id_student, id_course, grade) VALUES (2019, 1, 1, 2, 2.4);
+INSERT INTO public.record (annio, semester, id_student, id_course, grade) VALUES (2019, 2, 2, 1, 8.52);
+INSERT INTO public.record (annio, semester, id_student, id_course, grade) VALUES (2017, 1, 2, 1, 1);
+INSERT INTO public.record (annio, semester, id_student, id_course, grade) VALUES (5, 2, 4, 1, 0);
 

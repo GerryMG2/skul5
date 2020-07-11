@@ -1,10 +1,18 @@
 Configurar variables de entorno:
 
+ URI_POSTGRES
+ USERNAME_POSTGRES
+ PASSWORD_POSTGRES
+
 
 Restaurar base de datos o correr script database.sql
 
 Ingresar al sitio en http://localhost:8080
 
 Usuario administrador
+usuario: ycastro
+password: 1234
 
 Usuario coordinador
+usuario:jmendex
+password: simon
