@@ -179,27 +179,27 @@ public class StudentController {
                 add = "Upper(b.last_name) like";
             }
             List<groupStudentRecord> lista = this.service.getListOfSommethingWithQuerryFilterByListString(
-                    "select a.id_student as id, b.name as nombre,b.last_name as apellido, sum(case when a.grade > 5 then 1 else 0 end) as materiasa," +
+                    "select b.id as id, b.name as nombre,b.last_name as apellido, sum(case when a.grade > 5 then 1 else 0 end) as materiasa," +
                             "sum(case when a.grade <= 5 then 1 else 0 end) as materiasr" +
-                            ", avg(a.grade) promedio " +
+                            ", avg(coalesce(a.grade,0))  promedio " +
                             "from record a"
-                            + " left outer join student b on a.id_student = b.id "
+                            + " full outer join student b on a.id_student = b.id "
                             + "where "
                             + add
                             + "'%"
                             + sea.toUpperCase()
                             + "%' "
-                            + "  group by a.id_student, b.name, b.last_name  ;", groupStudentRecord.class);
+                            + "  group by b.id, b.name, b.last_name  ;", groupStudentRecord.class);
             System.out.println(lista);
             vm.addObject("lista", lista);
             vm.addObject("search", sea);
         } else {
-            List<groupStudentRecord> lista = this.service.getListOfSommethingWithQuerryFilterByListString("select a.id_student as id, b.name as nombre,b.last_name as apellido, sum(case when a.grade > 5 then 1 else 0 end) as materiasa," +
+            List<groupStudentRecord> lista = this.service.getListOfSommethingWithQuerryFilterByListString("select b.id as id, b.name as nombre,b.last_name as apellido, sum(case when a.grade > 5 then 1 else 0 end) as materiasa," +
                     "sum(case when a.grade <= 5 then 1 else 0 end) as materiasr" +
-                    ", avg(a.grade) promedio " +
+                    ", avg(coalesce(a.grade,0))  promedio " +
                     "from record a"
-                    + " left outer join student b on a.id_student = b.id "
-                    + "  group by a.id_student, b.name , b.last_name ;", groupStudentRecord.class);
+                    + " full outer join student b on a.id_student = b.id "
+                    + "  group by b.id, b.name , b.last_name ;", groupStudentRecord.class);
             System.out.println(lista.get(0).getNombre());
             vm.addObject("lista", lista);
         }
