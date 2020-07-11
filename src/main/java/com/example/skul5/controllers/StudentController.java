@@ -203,7 +203,7 @@ public class StudentController {
               System.out.println(lista.get(0).getNombre());
               vm.addObject("lista", lista);
         }
-        vm.setViewName("student/students");
+        vm.setViewName("student/listagrupal");
 
         return vm;
     }
@@ -211,7 +211,7 @@ public class StudentController {
     @GetMapping("/search")
     public ModelAndView search() {
         ModelAndView vm = new ModelAndView();
-        vm.setViewName("student/search-student");
+        vm.setViewName("student/listagrupal");
         return vm;
     }
 
