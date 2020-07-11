@@ -3,40 +3,71 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>Registro</title>
+	 <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+    <!-- Custom css -->
+    <link rel="stylesheet" href="/css/styles.css" />
+    
+    <link
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    
+    <title>Lista de Materias</title>
 </head>
 <body>
 <main layout:fragment="content">
     <div class="container">
-        <h3 class="center-align" th:text="${student.name + ' ' + student.lastName}"></h3>
-        <div class="control">
-            <a th:href="@{/student/{id}/record/add(id=${student.id})}" class="btn btn-primary">Nuevo Registro</a>
-        </div>
-        <table class="table table-hover">
-            <thead class="thead-dark">
-            <th>Accion</th>
-            <th>Materia</th>
-            <th>Año</th>
-            <th>Semestre</th>
-            <th>Nota</th>
-            <th>Estado</th>
-            </thead>
-            <th:block th:each="record, row:${student.records}">
-                <tr>
-                    <td>
-                        <a th:href="@{/student/{id}/record/edit/{year}/{cycle}/{course}(year=${record.primaryKey.year}, id=${record.primaryKey.student.id}, cycle=${record.primaryKey.semester}, course=${record.primaryKey.course.id})}">
-                            <i class="fas fa-edit fa-2x"></i>
-                        </a>
-                    </td>
-                    <td th:text="${record.primaryKey.course.name}"></td>
-                    <td th:text="${record.primaryKey.year}"></td>
-                    <td th:text="${record.primaryKey.semester}"></td>
-                    <td th:text="${record.grade}"></td>
-                    <td th:if="${record.grade >= 6}" class="alert alert-success">Aprovado</td>
-                    <td th:unless="${record.grade >= 6}" class="alert alert-danger">Reprovado</td>
-                </tr>
-            </th:block>
-        </table>
+
+      <h1 class="title" th:text="${student.name + ' ' + student.lastName}"></h1>
+      <a th:href="@{'/student/' + ${student.id} + '/record/add'}">
+        <button type="submit" class="btn btn-success btn-add">
+          <span class="fa fa-plus" aria-hidden="true"></span>
+          Agregar nueva materia
+        </button>
+      </a>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col" style="text-align: center;">Acción</th>
+            <th scope="col">Materia</th>
+            <th scope="col">Año</th>
+            <th scope="col">Ciclo</th>
+            <th scope="col">Nota</th>
+            <th scope="col">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <th:block th:each="record, row:${student.records}">
+            <tr>
+              <th scope="row" style="text-align: center;">
+              <a th:href="@{/student/{id}/record/edit/{year}/{cycle}/{course}(year=${record.primaryKey.year}, id=${record.primaryKey.student.id}, cycle=${record.primaryKey.semester}, course=${record.primaryKey.course.id})}">
+              	 <button type="submit" class="btn btn-primary">
+                  <span class="fa fa-pencil-square-o"></span>
+                </button>
+              </a>
+               
+              </th>
+              <td th:text="${record.primaryKey.course.name}"></td>
+              <td th:text="${record.primaryKey.year}"></td>
+              <td th:text="${record.primaryKey.semester}"></td>
+              <td th:text="${record.grade}"></td>
+              <td th:if="${record.grade >= 6}">
+                <span class="approved-tag">Aprobado</span>
+              </td>
+              <td th:unless="${record.grade >= 6}">
+                <span class="failed-tag">Reprobado</span>
+              </td>
+            </tr>
+          </th:block>
+        </tbody>
+      </table>
+
     </div>
 </main>
 </body>

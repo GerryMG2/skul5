@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+	 <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+    <!-- Custom css -->
+    <link rel="stylesheet" href="/css/styles.css" />
+    
+    <link
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    
+    <title>Buscar Estudiante</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="container wrapper">
+      <div class="subcontainer">
+        <h1 class="title">Expedientes de alumnos</h1>
+        <form th:action="@{/students}"  method="get">
+        	<a th:href="@{student/records/add}">
+        		<button type="submit" class="btn btn-success btn-add" value="add">
+		            <span class="fa fa-plus" aria-hidden="true"></span>
+		            Agregar nuevo expediente
+	          	</button>
+        	</a>
+          <div class="form-group">
+            <label for="inputCriterio">Buscar Alumno por</label>
+
+            <select id="inputCriterio" class="form-control" name="tipo" type="search" th:value="${search}">
+              <option selected>Nombre</option>
+              <option>Apellido</option>
+            </select>
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="form-group">
+            <label for="search">Valor de búsqueda</label>
+            <div>
+              <input
+                type="text"
+                class="form-control"
+                id="search"
+                placeholder="Roberto Ramírez"
+                name="sea"
+              />
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-large" value="search">
+            <span class="fa fa-search"></span>
+            Buscar
+          </button>
+        </form>
+      </div>
+    </div>
+</main>
+</body>
+</html>

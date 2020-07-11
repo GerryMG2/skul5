@@ -3,45 +3,99 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>Curso</title>
+	 <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+    <!-- Custom css -->
+    <link rel="stylesheet" href="/css/styles.css" />
+    
+    <link
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    
+    <title>Expediente</title>
 </head>
 <body>
 <main layout:fragment="content">
-    <div class="container">
+
+    <div class="container wrapper">
+      <div class="subcontainer">
+        <h1 class="title">Expediente</h1>
+        <h2 class="title name"  th:text="${record.primaryKey.student.name} + ' ' + ${record.primaryKey.student.lastName}"></h2>
         <form method="post" th:action="@{/student/{id}/record/add(id=${record.primaryKey.student.id})}" th:object="${record}">
-            <h3 class="center-align" th:text="'Expediente: ' + ${record.primaryKey.student.name} + ' ' + ${record.primaryKey.student.lastName}"></h3>
-            <div class="form-group">
-                <label for="year">Año</label>
-                <input id="year" type="number" th:field="*{primaryKey.year}" class="form-control"
-                       aria-describedby="year-help">
-                <small id="year-help" class="alert alert-danger form-text text-muted"
-                       th:errors="*{primaryKey.year}"></small>
+          <div class="form-row">
+            <div class="col-md-8 mb-3">
+              <label for="materia">Materia</label>
+              <select id="materia" class="form-control" th:field="*{primaryKey.course.id}" required>
+                <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+              </select>
+              <div class="invalid-feedback"></div>
+
             </div>
-            <div class="form-group">
-                <label for="semester">Semestre</label>
-                <select class="form-control" id="semester" th:field="*{primaryKey.semester}">
-                    <option value="1">Semestre 1</option>
-                    <option value="2">Semestre 2</option>
-                </select>
-                <small id="semester-help" class="alert alert-danger form-text text-muted"
-                       th:errors="*{primaryKey.semester}"></small>
+          </div>
+          <div class="form-row">
+            <div class="col-md-4 mb-3">
+              <label for="anio">Año</label>
+              <input
+                type="text"
+                class="form-control"
+                id="year"
+                placeholder="7.5"
+                th:field="*{primaryKey.year}"
+              />
+              <div class="invalid-feedback" th:errors="*{primaryKey.year}"></div>
             </div>
-            <div class="form-group">
-                <label for="course">Curso</label>
-                <select class="form-control" id="course" th:field="*{primaryKey.course.id}" required>
-                    <option th:each="course : ${courses}" th:value="${course.id}"
-                            th:text="${course.name}">
-                    </option>
-                </select>
+            <div class="col-md-4 mb-3">
+              <label for="ciclo">Ciclo</label>
+              <select id="ciclo" class="form-control" th:field="*{primaryKey.semester}">
+                <option value="1">Ciclo 01</option>
+                <option value="2">Ciclo 02</option>
+                <option value="3">Ciclo 03</option>
+              </select>
+              <div class="invalid-feedback" th:errors="*{primaryKey.semester}"></div>
             </div>
-            <div class="form-group">
-                <label for="grade">Nota</label>
-                <input type="text" id="grade" th:field="*{grade}">
-                <small id="grade-help" class="alert alert-danger form-text text-muted"
-                       th:errors="*{grade}"></small>
+
+          </div>
+          <div class="form-row">
+            <div class="col-md-2 mb-3">
+              <label for="nota">Nota</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nota"
+                placeholder="7.5"
+                th:field="*{grade}"
+              />
+              <div class="invalid-feedback" th:errors="*{grade}"></div>
+
             </div>
-            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+
+          <div class="btn-wrapper">
+            <button type="submit" class="btn btn-warning btn-clean">
+              <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+              Limpiar todo
+            </button>
+            <div class="btn-container">
+            <a th:href="@{'/student/' + ${record.primaryKey.student.id}}">
+            	<button type="button" class="btn btn-outline-primary btn-large">
+					<span class="fa fa-arrow-left" aria-hidden="true"></span>
+	                Atrás
+	            </button>
+            </a>
+              
+              <button type="submit" class="btn btn-primary btn-extra-large">
+                Guardar
+              </button>
+            </div>
+          </div>
         </form>
+      </div>
     </div>
 </main>
 </body>

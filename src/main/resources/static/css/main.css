@@ -6,10 +6,6 @@
     --enfasis-color: #a491d3;
 }
 
-* {
-    font-family: 'Roboto', sans-serif;
-}
-
 .social {
     display: inline-flex;
     box-sizing: border-box;
@@ -17,9 +13,9 @@
 }
 
 .social li {
-    margin: 0.2em;
     transition: all .05s;
     color: var(--base-color);
+    margin: 0.2em 1em;
 }
 
 .social li:hover {
@@ -34,10 +30,6 @@
     color: var(--accent-color);
 }
 
-.navbar .logo {
-    width: 90px;
-    height: 90px;
-}
 
 .nav-item.active {
     background-color: var(--accent-color);
@@ -49,11 +41,9 @@
 }
 
 .nav-item .nav-link {
-    font-family: monospace;
     font-size: 1em;
     color: var(--accent-color);
-    font-weight: 400 !important;
-    text-transform: uppercase;
+    font-weight: 600 !important;
     margin: 0 15px;
     position: relative;
 }
@@ -113,7 +103,6 @@
 
 .footer h6 {
     font-size: 1.1rem;
-    text-transform: uppercase;
     margin-top: 5px;
     letter-spacing: 2px;
 }
@@ -140,8 +129,22 @@ main {
     flex: 1 0 auto;
 }
 
+<
 .col-form{
     padding: 1em;
     background-color: #f0f0f0;
     border-radius: 1em;
+
+.wrapper-footer {
+	margin-top: 30px !important;
+	margin-bottom: 0px !important;
+	min-height: 0 !important;
+}
+
+h1.logo {
+	color: #ffffff; 
+	font-family: 'Lato', sans-serif; 
+	font-size: 44px; 
+	font-weight: 300;
+
 }
